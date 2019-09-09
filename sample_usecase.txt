@@ -1,0 +1,46 @@
+Use Case Name Withdraw Fund
+Brief Description ATM customer withdraws a specific amount of funds from a valid bank account
+Precondition The system is idle. The system is displaying a Welcome message
+Primary Actor ATM customer
+Secondary Actors None
+Dependency INCLUDE USE CASE Validate PIN
+Generalization None
+Basic Flows
+1 INCLUDE USE CASE Validate PIN
+2 ATM customer selects Withdrawal through the system
+3 ATM customer enters the withdrawal amount through the system
+4 ATM customer selects the account number through the system
+5 The system VALIDATES THAT the account number is valid
+6 The system VALIDATES THAT ATM customer has enough funds in the account
+7 The system VALIDATES THAT the withdrawal amount does not exceed the daily limit of the account
+8 The system VALIDATES THAT the ATM has enough funds
+9 The system dispenses the cash amount
+10 The system prints a receipt showing transaction number, transaction type, amount withdrawn, and account balance
+11 The system ejects the ATM card
+12 The system displays Welcome message
+Postcondition ATM customer funds have been withdrawn
+Bounded Alternative Flows
+RFS Basic Flow 5-7
+1 The system displays an apology message MEANWHILE the system ejects the ATM card
+2 The system shuts down
+3 ABORT
+Postcondition ATM customer funds have not been withdrawn. The system is shut down
+Global Alternative Flows
+IF ATM customer enters Cancel THEN
+1 The system cancels the transaction MEANWHILE the system ejects the ATM card
+2 ABORT
+ENDIF
+Postcondition ATM customer funds have not been withdrawn. The system is idle. The system is displaying a Welcome message
+Specific Alternative Flows
+RFS Basic Flow 8
+1 The system displays an apology message MEANWHILE the system ejects the ATM card
+2 ABORT
+Postcondition ATM customer funds have not been withdrawn. The system is idle. The system is displaying a Welcome message
+
+Use Case Name Validate PIN
+Brief Description ATM customer input PIN to gain access to the corresponding bank account
+Precondition The system is idle. The system is displaying a Welcome message
+Primary Actor ATM customer
+Secondary Actors None
+Dependency None
+Generalization None
