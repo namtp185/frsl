@@ -1,6 +1,6 @@
 package metamodels;
 
-public interface AssociationInterface {
+public interface AssociationInterface extends BasicElementInterface {
 	
 	public BasicElementInterface getFirstEnd();
 	

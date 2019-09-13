@@ -48,6 +48,26 @@ public class TestVisitor<T> extends UsecaseReaderBaseVisitor<T>
 		return visitChildren(ctx);
 	}
 	
+	public T visitDependency(UsecaseReaderParser.DependencyContext ctx) {
+		String secondUsecaseName = ctx.statement().getText();
+		if (!"None".equals(secondUsecaseName)) {
+			int associationType = 0;
+			String keyword = ctx.specialKeyword().getText();
+			if ("INCLUDE USE CASE".equals(keyword)) {
+				associationType = Association.ASSOCIATION_TYPE_INCLUDE;
+			} else if ("EXTEND USE CASE".equals(keyword)) {
+				associationType = Association.ASSOCIATION_TYPE_EXTEND;
+			}
+			AssociationInterface association = model.createAssociation(currentUsecase.getName() + "::" + secondUsecaseName,
+					currentUsecase, associationType, secondUsecaseName);
+		}
+		return visitChildren(ctx);
+	}
+	
+	public T visitGeneralization(UsecaseReaderParser.GeneralizationContext ctx) {
+		return visitChildren(ctx);
+	}
+	
 	public T visitFlow(UsecaseReaderParser.FlowContext ctx)
 	{
 		T temp = visitChildren(ctx);

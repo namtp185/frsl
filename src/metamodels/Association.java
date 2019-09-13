@@ -1,18 +1,21 @@
 package metamodels;
 
-public class Association implements AssociationInterface {
+public class Association extends BasicElement implements AssociationInterface {
+
+	public static int ASSOCIATION_TYPE_INCLUDE = 1;
 	
-	public static int ASSOCIATION_TYPE_DEPENDENCY = 1;
-	
-	public static int ASSOCIATION_TYPE_GENERALIZATION = 2;
-	
+	public static int ASSOCIATION_TYPE_EXTEND = 2;
+
+	public static int ASSOCIATION_TYPE_GENERALIZATION = 3;
+
 	protected BasicElementInterface firstEnd;
-	
+
 	protected BasicElementInterface secondEnd;
-	
+
 	protected int associationType;
-	
-	public Association(BasicElementInterface source, int type) {
+
+	public Association(String name, BasicElementInterface source, int type) {
+		super(name);
 		firstEnd = source;
 		associationType = type;
 	}
