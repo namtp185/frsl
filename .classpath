@@ -7,5 +7,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="antlr-4.7.2-complete.jar"/>
+	<classpathentry kind="lib" path="plantuml.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

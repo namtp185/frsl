@@ -610,6 +610,7 @@ public class UsecaseReaderParser extends Parser {
 		public SpecialKeywordContext specialKeyword() {
 			return getRuleContext(SpecialKeywordContext.class,0);
 		}
+		public TerminalNode WS() { return getToken(UsecaseReaderParser.WS, 0); }
 		public DependencyContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -648,7 +649,17 @@ public class UsecaseReaderParser extends Parser {
 				}
 			}
 
-			setState(81);
+			setState(82);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,6,_ctx) ) {
+			case 1:
+				{
+				setState(81);
+				match(WS);
+				}
+				break;
+			}
+			setState(84);
 			statement();
 			}
 		}
@@ -670,6 +681,7 @@ public class UsecaseReaderParser extends Parser {
 		public SpecialKeywordContext specialKeyword() {
 			return getRuleContext(SpecialKeywordContext.class,0);
 		}
+		public TerminalNode WS() { return getToken(UsecaseReaderParser.WS, 0); }
 		public GeneralizationContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -696,19 +708,29 @@ public class UsecaseReaderParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(83);
+			setState(86);
 			match(T__8);
-			setState(85);
+			setState(88);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20))) != 0)) {
 				{
-				setState(84);
+				setState(87);
 				specialKeyword();
 				}
 			}
 
-			setState(87);
+			setState(91);
+			_errHandler.sync(this);
+			switch ( getInterpreter().adaptivePredict(_input,8,_ctx) ) {
+			case 1:
+				{
+				setState(90);
+				match(WS);
+				}
+				break;
+			}
+			setState(93);
 			statement();
 			}
 		}
@@ -765,11 +787,11 @@ public class UsecaseReaderParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			{
-			setState(89);
+			setState(95);
 			flowType();
-			setState(90);
+			setState(96);
 			match(WS);
-			setState(91);
+			setState(97);
 			_la = _input.LA(1);
 			if ( !(_la==T__9 || _la==T__10) ) {
 			_errHandler.recoverInline(this);
@@ -779,22 +801,22 @@ public class UsecaseReaderParser extends Parser {
 				_errHandler.reportMatch(this);
 				consume();
 			}
-			setState(92);
+			setState(98);
 			match(EOL);
 			}
-			setState(95);
+			setState(101);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==T__15) {
 				{
-				setState(94);
+				setState(100);
 				rfs();
 				}
 			}
 
-			setState(97);
+			setState(103);
 			steps();
-			setState(98);
+			setState(104);
 			postCondition();
 			}
 		}
@@ -836,7 +858,7 @@ public class UsecaseReaderParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(100);
+			setState(106);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__11) | (1L << T__12) | (1L << T__13) | (1L << T__14))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -898,13 +920,13 @@ public class UsecaseReaderParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(102);
+			setState(108);
 			match(T__15);
-			setState(103);
+			setState(109);
 			flowType();
-			setState(104);
+			setState(110);
 			match(WS);
-			setState(105);
+			setState(111);
 			_la = _input.LA(1);
 			if ( !(_la==T__9 || _la==T__10) ) {
 			_errHandler.recoverInline(this);
@@ -914,23 +936,23 @@ public class UsecaseReaderParser extends Parser {
 				_errHandler.reportMatch(this);
 				consume();
 			}
-			setState(106);
+			setState(112);
 			match(WS);
-			setState(107);
+			setState(113);
 			match(Number);
-			setState(110);
+			setState(116);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if (_la==T__16) {
 				{
-				setState(108);
+				setState(114);
 				match(T__16);
-				setState(109);
+				setState(115);
 				match(Number);
 				}
 			}
 
-			setState(112);
+			setState(118);
 			match(EOL);
 			}
 		}
@@ -984,17 +1006,17 @@ public class UsecaseReaderParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(116); 
+			setState(122); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			do {
 				{
-				setState(116);
+				setState(122);
 				_errHandler.sync(this);
 				switch (_input.LA(1)) {
 				case Number:
 					{
-					setState(114);
+					setState(120);
 					step();
 					}
 					break;
@@ -1005,7 +1027,7 @@ public class UsecaseReaderParser extends Parser {
 				case T__25:
 				case T__26:
 					{
-					setState(115);
+					setState(121);
 					conditionalLogic();
 					}
 					break;
@@ -1013,7 +1035,7 @@ public class UsecaseReaderParser extends Parser {
 					throw new NoViableAltException(this);
 				}
 				}
-				setState(118); 
+				setState(124); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__21) | (1L << T__22) | (1L << T__23) | (1L << T__24) | (1L << T__25) | (1L << T__26) | (1L << Number))) != 0) );
@@ -1062,13 +1084,13 @@ public class UsecaseReaderParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(120);
+			setState(126);
 			match(Number);
-			setState(121);
+			setState(127);
 			match(WS);
-			setState(122);
+			setState(128);
 			sentence();
-			setState(123);
+			setState(129);
 			match(EOL);
 			}
 		}
@@ -1119,32 +1141,32 @@ public class UsecaseReaderParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(126);
+			setState(132);
 			_errHandler.sync(this);
-			switch ( getInterpreter().adaptivePredict(_input,11,_ctx) ) {
+			switch ( getInterpreter().adaptivePredict(_input,13,_ctx) ) {
 			case 1:
 				{
-				setState(125);
+				setState(131);
 				statement();
 				}
 				break;
 			}
-			setState(129);
+			setState(135);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20))) != 0)) {
 				{
-				setState(128);
+				setState(134);
 				specialKeyword();
 				}
 			}
 
-			setState(132);
+			setState(138);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			if ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << Word) | (1L << Number) | (1L << Punctuation) | (1L << WS))) != 0)) {
 				{
-				setState(131);
+				setState(137);
 				statement();
 				}
 			}
@@ -1189,7 +1211,7 @@ public class UsecaseReaderParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(134);
+			setState(140);
 			_la = _input.LA(1);
 			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << T__17) | (1L << T__18) | (1L << T__19) | (1L << T__20))) != 0)) ) {
 			_errHandler.recoverInline(this);
@@ -1243,37 +1265,37 @@ public class UsecaseReaderParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(144);
+			setState(150);
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case T__21:
 				{
-				setState(136);
+				setState(142);
 				match(T__21);
 				}
 				break;
 			case T__22:
 				{
-				setState(137);
+				setState(143);
 				match(T__22);
 				}
 				break;
 			case T__23:
 				{
-				setState(138);
+				setState(144);
 				match(T__23);
 				}
 				break;
 			case T__24:
 				{
-				setState(139);
+				setState(145);
 				match(T__24);
 				}
 				break;
 			case T__25:
 			case T__26:
 				{
-				setState(140);
+				setState(146);
 				_la = _input.LA(1);
 				if ( !(_la==T__25 || _la==T__26) ) {
 				_errHandler.recoverInline(this);
@@ -1283,16 +1305,16 @@ public class UsecaseReaderParser extends Parser {
 					_errHandler.reportMatch(this);
 					consume();
 				}
-				setState(141);
+				setState(147);
 				statement();
-				setState(142);
+				setState(148);
 				match(T__27);
 				}
 				break;
 			default:
 				throw new NoViableAltException(this);
 			}
-			setState(146);
+			setState(152);
 			match(EOL);
 			}
 		}
@@ -1337,11 +1359,11 @@ public class UsecaseReaderParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(148);
+			setState(154);
 			match(T__28);
-			setState(149);
+			setState(155);
 			statement();
-			setState(150);
+			setState(156);
 			match(EOL);
 			}
 		}
@@ -1400,7 +1422,7 @@ public class UsecaseReaderParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(153); 
+			setState(159); 
 			_errHandler.sync(this);
 			_alt = 1;
 			do {
@@ -1408,7 +1430,7 @@ public class UsecaseReaderParser extends Parser {
 				case 1:
 					{
 					{
-					setState(152);
+					setState(158);
 					_la = _input.LA(1);
 					if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << Word) | (1L << Number) | (1L << Punctuation) | (1L << WS))) != 0)) ) {
 					_errHandler.recoverInline(this);
@@ -1424,9 +1446,9 @@ public class UsecaseReaderParser extends Parser {
 				default:
 					throw new NoViableAltException(this);
 				}
-				setState(155); 
+				setState(161); 
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,15,_ctx);
+				_alt = getInterpreter().adaptivePredict(_input,17,_ctx);
 			} while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER );
 			}
 		}
@@ -1442,51 +1464,53 @@ public class UsecaseReaderParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3$\u00a0\4\2\t\2\4"+
+		"\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3$\u00a6\4\2\t\2\4"+
 		"\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t"+
 		"\13\4\f\t\f\4\r\t\r\4\16\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22"+
 		"\4\23\t\23\4\24\t\24\3\2\3\2\6\2+\n\2\r\2\16\2,\3\3\3\3\3\3\3\3\3\3\3"+
 		"\3\3\3\3\3\5\3\67\n\3\3\3\3\3\6\3;\n\3\r\3\16\3<\3\4\3\4\3\4\3\5\3\5\3"+
-		"\5\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\t\3\t\5\tR\n\t\3\t\3"+
-		"\t\3\n\3\n\5\nX\n\n\3\n\3\n\3\13\3\13\3\13\3\13\3\13\3\13\5\13b\n\13\3"+
-		"\13\3\13\3\13\3\f\3\f\3\r\3\r\3\r\3\r\3\r\3\r\3\r\3\r\5\rq\n\r\3\r\3\r"+
-		"\3\16\3\16\6\16w\n\16\r\16\16\16x\3\17\3\17\3\17\3\17\3\17\3\20\5\20\u0081"+
-		"\n\20\3\20\5\20\u0084\n\20\3\20\5\20\u0087\n\20\3\21\3\21\3\22\3\22\3"+
-		"\22\3\22\3\22\3\22\3\22\3\22\5\22\u0093\n\22\3\22\3\22\3\23\3\23\3\23"+
-		"\3\23\3\24\6\24\u009c\n\24\r\24\16\24\u009d\3\24\2\2\25\2\4\6\b\n\f\16"+
-		"\20\22\24\26\30\32\34\36 \"$&\2\t\3\2\6\7\3\2\b\t\3\2\f\r\3\2\16\21\3"+
-		"\2\24\27\3\2\34\35\4\2 \"$$\2\u00a2\2*\3\2\2\2\4.\3\2\2\2\6>\3\2\2\2\b"+
-		"A\3\2\2\2\nD\3\2\2\2\fG\3\2\2\2\16M\3\2\2\2\20O\3\2\2\2\22U\3\2\2\2\24"+
-		"[\3\2\2\2\26f\3\2\2\2\30h\3\2\2\2\32v\3\2\2\2\34z\3\2\2\2\36\u0080\3\2"+
-		"\2\2 \u0088\3\2\2\2\"\u0092\3\2\2\2$\u0096\3\2\2\2&\u009b\3\2\2\2(+\5"+
-		"\4\3\2)+\7#\2\2*(\3\2\2\2*)\3\2\2\2+,\3\2\2\2,*\3\2\2\2,-\3\2\2\2-\3\3"+
-		"\2\2\2./\5\6\4\2/:\7#\2\2\60;\5\24\13\2\61\67\5\b\5\2\62\67\5\n\6\2\63"+
-		"\67\5\f\7\2\64\67\5\20\t\2\65\67\5\22\n\2\66\61\3\2\2\2\66\62\3\2\2\2"+
-		"\66\63\3\2\2\2\66\64\3\2\2\2\66\65\3\2\2\2\678\3\2\2\289\7#\2\29;\3\2"+
-		"\2\2:\60\3\2\2\2:\66\3\2\2\2;<\3\2\2\2<:\3\2\2\2<=\3\2\2\2=\5\3\2\2\2"+
-		">?\7\3\2\2?@\5&\24\2@\7\3\2\2\2AB\7\4\2\2BC\5&\24\2C\t\3\2\2\2DE\7\5\2"+
-		"\2EF\5&\24\2F\13\3\2\2\2GH\5\16\b\2HI\7$\2\2IJ\t\2\2\2JK\7$\2\2KL\5&\24"+
-		"\2L\r\3\2\2\2MN\t\3\2\2N\17\3\2\2\2OQ\7\n\2\2PR\5 \21\2QP\3\2\2\2QR\3"+
-		"\2\2\2RS\3\2\2\2ST\5&\24\2T\21\3\2\2\2UW\7\13\2\2VX\5 \21\2WV\3\2\2\2"+
-		"WX\3\2\2\2XY\3\2\2\2YZ\5&\24\2Z\23\3\2\2\2[\\\5\26\f\2\\]\7$\2\2]^\t\4"+
-		"\2\2^_\7#\2\2_a\3\2\2\2`b\5\30\r\2a`\3\2\2\2ab\3\2\2\2bc\3\2\2\2cd\5\32"+
-		"\16\2de\5$\23\2e\25\3\2\2\2fg\t\5\2\2g\27\3\2\2\2hi\7\22\2\2ij\5\26\f"+
-		"\2jk\7$\2\2kl\t\4\2\2lm\7$\2\2mp\7!\2\2no\7\23\2\2oq\7!\2\2pn\3\2\2\2"+
-		"pq\3\2\2\2qr\3\2\2\2rs\7#\2\2s\31\3\2\2\2tw\5\34\17\2uw\5\"\22\2vt\3\2"+
-		"\2\2vu\3\2\2\2wx\3\2\2\2xv\3\2\2\2xy\3\2\2\2y\33\3\2\2\2z{\7!\2\2{|\7"+
-		"$\2\2|}\5\36\20\2}~\7#\2\2~\35\3\2\2\2\177\u0081\5&\24\2\u0080\177\3\2"+
-		"\2\2\u0080\u0081\3\2\2\2\u0081\u0083\3\2\2\2\u0082\u0084\5 \21\2\u0083"+
-		"\u0082\3\2\2\2\u0083\u0084\3\2\2\2\u0084\u0086\3\2\2\2\u0085\u0087\5&"+
-		"\24\2\u0086\u0085\3\2\2\2\u0086\u0087\3\2\2\2\u0087\37\3\2\2\2\u0088\u0089"+
-		"\t\6\2\2\u0089!\3\2\2\2\u008a\u0093\7\30\2\2\u008b\u0093\7\31\2\2\u008c"+
-		"\u0093\7\32\2\2\u008d\u0093\7\33\2\2\u008e\u008f\t\7\2\2\u008f\u0090\5"+
-		"&\24\2\u0090\u0091\7\36\2\2\u0091\u0093\3\2\2\2\u0092\u008a\3\2\2\2\u0092"+
-		"\u008b\3\2\2\2\u0092\u008c\3\2\2\2\u0092\u008d\3\2\2\2\u0092\u008e\3\2"+
-		"\2\2\u0093\u0094\3\2\2\2\u0094\u0095\7#\2\2\u0095#\3\2\2\2\u0096\u0097"+
-		"\7\37\2\2\u0097\u0098\5&\24\2\u0098\u0099\7#\2\2\u0099%\3\2\2\2\u009a"+
-		"\u009c\t\b\2\2\u009b\u009a\3\2\2\2\u009c\u009d\3\2\2\2\u009d\u009b\3\2"+
-		"\2\2\u009d\u009e\3\2\2\2\u009e\'\3\2\2\2\22*,\66:<QWapvx\u0080\u0083\u0086"+
-		"\u0092\u009d";
+		"\5\3\6\3\6\3\6\3\7\3\7\3\7\3\7\3\7\3\7\3\b\3\b\3\t\3\t\5\tR\n\t\3\t\5"+
+		"\tU\n\t\3\t\3\t\3\n\3\n\5\n[\n\n\3\n\5\n^\n\n\3\n\3\n\3\13\3\13\3\13\3"+
+		"\13\3\13\3\13\5\13h\n\13\3\13\3\13\3\13\3\f\3\f\3\r\3\r\3\r\3\r\3\r\3"+
+		"\r\3\r\3\r\5\rw\n\r\3\r\3\r\3\16\3\16\6\16}\n\16\r\16\16\16~\3\17\3\17"+
+		"\3\17\3\17\3\17\3\20\5\20\u0087\n\20\3\20\5\20\u008a\n\20\3\20\5\20\u008d"+
+		"\n\20\3\21\3\21\3\22\3\22\3\22\3\22\3\22\3\22\3\22\3\22\5\22\u0099\n\22"+
+		"\3\22\3\22\3\23\3\23\3\23\3\23\3\24\6\24\u00a2\n\24\r\24\16\24\u00a3\3"+
+		"\24\2\2\25\2\4\6\b\n\f\16\20\22\24\26\30\32\34\36 \"$&\2\t\3\2\6\7\3\2"+
+		"\b\t\3\2\f\r\3\2\16\21\3\2\24\27\3\2\34\35\4\2 \"$$\2\u00aa\2*\3\2\2\2"+
+		"\4.\3\2\2\2\6>\3\2\2\2\bA\3\2\2\2\nD\3\2\2\2\fG\3\2\2\2\16M\3\2\2\2\20"+
+		"O\3\2\2\2\22X\3\2\2\2\24a\3\2\2\2\26l\3\2\2\2\30n\3\2\2\2\32|\3\2\2\2"+
+		"\34\u0080\3\2\2\2\36\u0086\3\2\2\2 \u008e\3\2\2\2\"\u0098\3\2\2\2$\u009c"+
+		"\3\2\2\2&\u00a1\3\2\2\2(+\5\4\3\2)+\7#\2\2*(\3\2\2\2*)\3\2\2\2+,\3\2\2"+
+		"\2,*\3\2\2\2,-\3\2\2\2-\3\3\2\2\2./\5\6\4\2/:\7#\2\2\60;\5\24\13\2\61"+
+		"\67\5\b\5\2\62\67\5\n\6\2\63\67\5\f\7\2\64\67\5\20\t\2\65\67\5\22\n\2"+
+		"\66\61\3\2\2\2\66\62\3\2\2\2\66\63\3\2\2\2\66\64\3\2\2\2\66\65\3\2\2\2"+
+		"\678\3\2\2\289\7#\2\29;\3\2\2\2:\60\3\2\2\2:\66\3\2\2\2;<\3\2\2\2<:\3"+
+		"\2\2\2<=\3\2\2\2=\5\3\2\2\2>?\7\3\2\2?@\5&\24\2@\7\3\2\2\2AB\7\4\2\2B"+
+		"C\5&\24\2C\t\3\2\2\2DE\7\5\2\2EF\5&\24\2F\13\3\2\2\2GH\5\16\b\2HI\7$\2"+
+		"\2IJ\t\2\2\2JK\7$\2\2KL\5&\24\2L\r\3\2\2\2MN\t\3\2\2N\17\3\2\2\2OQ\7\n"+
+		"\2\2PR\5 \21\2QP\3\2\2\2QR\3\2\2\2RT\3\2\2\2SU\7$\2\2TS\3\2\2\2TU\3\2"+
+		"\2\2UV\3\2\2\2VW\5&\24\2W\21\3\2\2\2XZ\7\13\2\2Y[\5 \21\2ZY\3\2\2\2Z["+
+		"\3\2\2\2[]\3\2\2\2\\^\7$\2\2]\\\3\2\2\2]^\3\2\2\2^_\3\2\2\2_`\5&\24\2"+
+		"`\23\3\2\2\2ab\5\26\f\2bc\7$\2\2cd\t\4\2\2de\7#\2\2eg\3\2\2\2fh\5\30\r"+
+		"\2gf\3\2\2\2gh\3\2\2\2hi\3\2\2\2ij\5\32\16\2jk\5$\23\2k\25\3\2\2\2lm\t"+
+		"\5\2\2m\27\3\2\2\2no\7\22\2\2op\5\26\f\2pq\7$\2\2qr\t\4\2\2rs\7$\2\2s"+
+		"v\7!\2\2tu\7\23\2\2uw\7!\2\2vt\3\2\2\2vw\3\2\2\2wx\3\2\2\2xy\7#\2\2y\31"+
+		"\3\2\2\2z}\5\34\17\2{}\5\"\22\2|z\3\2\2\2|{\3\2\2\2}~\3\2\2\2~|\3\2\2"+
+		"\2~\177\3\2\2\2\177\33\3\2\2\2\u0080\u0081\7!\2\2\u0081\u0082\7$\2\2\u0082"+
+		"\u0083\5\36\20\2\u0083\u0084\7#\2\2\u0084\35\3\2\2\2\u0085\u0087\5&\24"+
+		"\2\u0086\u0085\3\2\2\2\u0086\u0087\3\2\2\2\u0087\u0089\3\2\2\2\u0088\u008a"+
+		"\5 \21\2\u0089\u0088\3\2\2\2\u0089\u008a\3\2\2\2\u008a\u008c\3\2\2\2\u008b"+
+		"\u008d\5&\24\2\u008c\u008b\3\2\2\2\u008c\u008d\3\2\2\2\u008d\37\3\2\2"+
+		"\2\u008e\u008f\t\6\2\2\u008f!\3\2\2\2\u0090\u0099\7\30\2\2\u0091\u0099"+
+		"\7\31\2\2\u0092\u0099\7\32\2\2\u0093\u0099\7\33\2\2\u0094\u0095\t\7\2"+
+		"\2\u0095\u0096\5&\24\2\u0096\u0097\7\36\2\2\u0097\u0099\3\2\2\2\u0098"+
+		"\u0090\3\2\2\2\u0098\u0091\3\2\2\2\u0098\u0092\3\2\2\2\u0098\u0093\3\2"+
+		"\2\2\u0098\u0094\3\2\2\2\u0099\u009a\3\2\2\2\u009a\u009b\7#\2\2\u009b"+
+		"#\3\2\2\2\u009c\u009d\7\37\2\2\u009d\u009e\5&\24\2\u009e\u009f\7#\2\2"+
+		"\u009f%\3\2\2\2\u00a0\u00a2\t\b\2\2\u00a1\u00a0\3\2\2\2\u00a2\u00a3\3"+
+		"\2\2\2\u00a3\u00a1\3\2\2\2\u00a3\u00a4\3\2\2\2\u00a4\'\3\2\2\2\24*,\66"+
+		":<QTZ]gv|~\u0086\u0089\u008c\u0098\u00a3";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

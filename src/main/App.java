@@ -36,6 +36,8 @@ public class App {
         
         visitor.visit(tree);
         
+        visitor.generate();
+        
         System.out.println("done");
 		
 	}

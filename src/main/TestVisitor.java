@@ -1,9 +1,14 @@
 package main;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
+import java.util.Collection;
+
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
 import parser.*;
 import metamodels.*;
+import net.sourceforge.plantuml.SourceStringReader;
 
 public class TestVisitor<T> extends UsecaseReaderBaseVisitor<T>
 {
@@ -24,6 +29,7 @@ public class TestVisitor<T> extends UsecaseReaderBaseVisitor<T>
 	{
 		String ucName = ctx.statement().getText();
 		currentUsecase = model.createUsecase(ucName);
+		model.applySecondEnd(currentUsecase);
 		return visitChildren(ctx);
 	}
 	
@@ -42,8 +48,12 @@ public class TestVisitor<T> extends UsecaseReaderBaseVisitor<T>
 	public T visitActor(UsecaseReaderParser.ActorContext ctx) {
 		String actorName = ctx.statement().getText();
 		if (!"None".equals(actorName)) {
-			ActorInterface actor = model.createActor(actorName);
+			ActorInterface actor = model.getActor(actorName);
+			if (actor == null) {
+				actor = model.createActor(actorName);
+			}
 			currentUsecase.addActor(actor, true);
+			actor.addUsecase(currentUsecase);
 		}
 		return visitChildren(ctx);
 	}
@@ -87,5 +97,46 @@ public class TestVisitor<T> extends UsecaseReaderBaseVisitor<T>
 	public T visitPostCondition(UsecaseReaderParser.PostConditionContext ctx)
 	{
 		return visitChildren(ctx);
+	}
+	
+	public void generate() {
+		try {
+			OutputStream png = new FileOutputStream("test.png");
+			String source = "@startuml\n";
+			
+			for(UsecaseInterface usecase : model.getUsecases().values()) {
+				source += "(" + usecase.getName() + ")\n";
+			};
+			
+			for(ActorInterface actor : model.getActors().values()) {
+				source += ":" + actor.getName() + ":\n";
+				for(UsecaseInterface usecase : actor.getUsecases()) {
+					source += ":" + actor.getName() + ": --> (" + usecase.getName() + ")\n";
+				};
+			};
+			
+			for(AssociationInterface association : model.getAssociations().values()) {
+				source += "(" + association.getFirstEnd().getName() + ") .> (" + association.getSecondEnd().getName() + ")";
+				if (association.getAssociationType() == Association.ASSOCIATION_TYPE_INCLUDE) {
+					source += " : <<include>>";
+				}
+				else if (association.getAssociationType() == Association.ASSOCIATION_TYPE_EXTEND) {
+					source += " : <<extends>>";
+				}
+				source += "\n";
+			};
+			
+			source += "@enduml\n";
+			
+			System.out.println(source);
+	
+			SourceStringReader reader = new SourceStringReader(source);
+			// Write the first image to "png"
+			String desc = reader.outputImage(png).getDescription();
+			// Return a null string if no generation
+		}
+		catch (Exception e) {
+			
+		}
 	}
 }

@@ -48,11 +48,11 @@ public class FRSLModel {
 	public void applySecondEnd(BasicElementInterface secondEnd) {
 		String secondEndName = secondEnd.getName();
 		pendingAssociations.forEach((k, v) -> {
-			if (v == secondEndName) {
+			if (v.equals(secondEndName)) {
 				getAssociation(k).setSecondEnd(secondEnd);
-				pendingAssociations.remove(k);
 			}
 		});
+		pendingAssociations.values().removeIf(value -> value.equals(secondEndName));
 	}
 
 	public BasicElementInterface getElement(String name) {
@@ -70,12 +70,24 @@ public class FRSLModel {
 		return usecases.get(name);
 	}
 
+	public Map<String, UsecaseInterface> getUsecases() {
+		return usecases;
+	}
+
 	public ActorInterface getActor(String name) {
 		return actors.get(name);
 	}
 
+	public Map<String, ActorInterface> getActors() {
+		return actors;
+	}
+
 	public AssociationInterface getAssociation(String name) {
 		return associations.get(name);
+	}
+
+	public Map<String, AssociationInterface> getAssociations() {
+		return associations;
 	}
 
 }
