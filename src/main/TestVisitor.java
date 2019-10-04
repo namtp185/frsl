@@ -65,7 +65,7 @@ public class TestVisitor<T> extends UsecaseReaderBaseVisitor<T>
 			String keyword = ctx.specialKeyword().getText();
 			if ("INCLUDE USE CASE".equals(keyword)) {
 				associationType = Association.ASSOCIATION_TYPE_INCLUDE;
-			} else if ("EXTEND USE CASE".equals(keyword)) {
+			} else if ("EXTENDED BY USE CASE".equals(keyword)) {
 				associationType = Association.ASSOCIATION_TYPE_EXTEND;
 			}
 			AssociationInterface association = model.createAssociation(currentUsecase.getName() + "::" + secondUsecaseName,
@@ -101,7 +101,7 @@ public class TestVisitor<T> extends UsecaseReaderBaseVisitor<T>
 	
 	public void generate() {
 		try {
-			OutputStream png = new FileOutputStream("test.png");
+			OutputStream png = new FileOutputStream("ucDiagram.png");
 			String source = "@startuml\n";
 			
 			for(UsecaseInterface usecase : model.getUsecases().values()) {
@@ -111,12 +111,12 @@ public class TestVisitor<T> extends UsecaseReaderBaseVisitor<T>
 			for(ActorInterface actor : model.getActors().values()) {
 				source += ":" + actor.getName() + ":\n";
 				for(UsecaseInterface usecase : actor.getUsecases()) {
-					source += ":" + actor.getName() + ": --> (" + usecase.getName() + ")\n";
+					source += ":" + actor.getName() + ": -- (" + usecase.getName() + ")\n";
 				};
 			};
 			
 			for(AssociationInterface association : model.getAssociations().values()) {
-				source += "(" + association.getFirstEnd().getName() + ") .> (" + association.getSecondEnd().getName() + ")";
+				source += "(" + association.getFirstEnd().getName() + ") ..> (" + association.getSecondEnd().getName() + ")";
 				if (association.getAssociationType() == Association.ASSOCIATION_TYPE_INCLUDE) {
 					source += " : <<include>>";
 				}

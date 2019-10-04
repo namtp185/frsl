@@ -1,0 +1,36 @@
+Use Case Name Input Cash
+Brief Description POS Customer put bill into cash slot
+Precondition The system is in idle state or select item state
+Primary Actor POS Customer
+Secondary Actors None
+Dependency None
+Generalization None
+
+Use Case Name Order Item
+Brief Description Select an item that it available
+Precondition The system is in select item state
+Primary Actor POS Customer
+Dependency INCLUDE USE CASE Input Cash
+Dependency INCLUDE USE CASE Return Change
+
+Use Case Name Cancel
+Brief Description ATM customer input PIN to gain access to the corresponding bank account
+Precondition The system is in select item state
+Primary Actor POS Customer
+Dependency EXTENDED BY USE CASE Input Cash
+Dependency INCLUDE USE CASE Return Change
+
+Use Case Name Return Change
+Brief Description The system return the change to POS Customer
+Precondition The system is in delivered state
+
+Use Case Name Call Staff
+Brief Description POS Customer press the help button to call for a staff
+Precondition The system is in any state
+Primary Actor POS Customer
+Secondary Actors POS Staff
+
+Use Case Name Manage Items
+Brief Description POS Staff can open the POS without trigger warnings
+Precondition The system is in idle state
+Primary Actor POS Staff

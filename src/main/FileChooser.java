@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.TreeMap;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -26,6 +27,10 @@ public class FileChooser extends JFrame {
 	
 	protected JButton add = new JButton("Add");
 	
+	JLabel ucDiagram = new JLabel();
+	
+	ImageIcon image;
+	
 	public FileChooser() {
 		JPanel p = new JPanel();
 	    open.addActionListener(new OpenL());
@@ -35,6 +40,8 @@ public class FileChooser extends JFrame {
 	    
 	    Container cp = getContentPane();
 	    cp.add(p, BorderLayout.SOUTH);
+	    
+	    cp.add(ucDiagram, BorderLayout.NORTH);
 	}
 	
 	class OpenL implements ActionListener {
@@ -44,6 +51,11 @@ public class FileChooser extends JFrame {
 			if (rVal == JFileChooser.APPROVE_OPTION) {
 				try {
 					App.parseFromFile(c.getSelectedFile().getPath());
+					
+					image = new ImageIcon("ucDiagram.png");
+			    	image.getImage().flush();
+			    	ucDiagram.setIcon(image);
+					FileChooser.this.pack();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -91,6 +103,11 @@ public class FileChooser extends JFrame {
 		    	App.addUsecase(data);
 		    	addWindow.setVisible(false);
 		    	addWindow.dispose();
+
+		    	image = new ImageIcon("ucDiagram.png");
+		    	image.getImage().flush();
+		    	ucDiagram.setIcon(image);
+				FileChooser.this.pack();
 		    }
 		}
 	}

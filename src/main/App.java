@@ -20,6 +20,7 @@ public class App {
 	public static void main(String[] args) {
 		FileChooser fileChooser = new FileChooser();
 		fileChooser.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		fileChooser.pack();
 		fileChooser.setSize(250, 100);
 		fileChooser.setVisible(true);
 	}
@@ -44,6 +45,7 @@ public class App {
 	
 	public static void addUsecase(Map<String, String> data) {
 		visitor.model.createUsecase(data.get("Usecase Name")).getDescription().setText(data.get("Short Description"));
+		visitor.generate();
 	}
 
 }
