@@ -65,7 +65,7 @@ public class FileChooser extends JFrame {
 	
 	class AddL implements ActionListener {
 		protected JFrame addWindow;
-		protected JTextField ucName, description;
+		protected JTextField ucName, description, precondition, primaryActor, secondaryActor, dependency, generalization;
 		protected JPanel p;
 		protected JButton submit = new JButton("Submit");
 	    public void actionPerformed(ActionEvent e) {
@@ -73,15 +73,35 @@ public class FileChooser extends JFrame {
 			Container cp = addWindow.getContentPane();
 			
 			p = new JPanel();
-			p.setLayout(new GridLayout(2, 2));
+			p.setLayout(new GridLayout(7, 2));
 			
 			ucName = new JTextField(30);
 			p.add(new JLabel("Usecase Name"));
 			p.add(ucName);
 			
 			description = new JTextField(30);
-			p.add(new JLabel("Short Description"));
+			p.add(new JLabel("Brief Description"));
 			p.add(description);
+			
+			precondition = new JTextField(30);
+			p.add(new JLabel("Precondition"));
+			p.add(precondition);
+			
+			primaryActor = new JTextField(30);
+			p.add(new JLabel("Primary Actor"));
+			p.add(primaryActor);
+			
+			secondaryActor = new JTextField(30);
+			p.add(new JLabel("Secondary Actors"));
+			p.add(secondaryActor);
+			
+			dependency = new JTextField(30);
+			p.add(new JLabel("Dependency"));
+			p.add(dependency);
+			
+//			generalization = new JTextField(30);
+//			p.add(new JLabel("Generalization"));
+//			p.add(generalization);
 			
 			cp.add(p, BorderLayout.NORTH);
 			
@@ -99,7 +119,12 @@ public class FileChooser extends JFrame {
 	    	Map<String, String> data = new TreeMap<String, String>();
 		    public void actionPerformed(ActionEvent e) {
 		    	data.put("Usecase Name", ucName.getText());
-		    	data.put("Short Description", description.getText());
+		    	data.put("Brief Description", description.getText());
+		    	data.put("Precondition", precondition.getText());
+		    	data.put("Primary Actor", primaryActor.getText());
+		    	data.put("Secondary Actors", secondaryActor.getText());
+		    	data.put("Dependency", dependency.getText());
+//		    	data.put("Generalization", generalization.getText());
 		    	App.addUsecase(data);
 		    	addWindow.setVisible(false);
 		    	addWindow.dispose();

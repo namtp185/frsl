@@ -2,6 +2,7 @@ package main;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.Collection;
+import java.util.Map;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
@@ -99,6 +100,48 @@ public class TestVisitor<T> extends UsecaseReaderBaseVisitor<T>
 		return visitChildren(ctx);
 	}
 	
+	public void addUseCase(Map<String, String> data) {
+		UsecaseInterface newUsecase = model.createUsecase(data.get("Usecase Name"));
+		model.applySecondEnd(newUsecase);
+		newUsecase.getDescription().setText(data.get("Brief Description"));
+		newUsecase.getPrecondition().setText(data.get("Precondition"));
+		
+		String actorName;
+		actorName = data.get("Primary Actor");
+		if (!"None".equals(actorName) && !"".equals(actorName)) {
+			ActorInterface actor = model.getActor(actorName);
+			if (actor == null) {
+				actor = model.createActor(actorName);
+			}
+			newUsecase.addActor(actor, true);
+			actor.addUsecase(newUsecase);
+		}
+		actorName = data.get("Secondary Actors");
+		if (!"None".equals(actorName) && !"".equals(actorName)) {
+			ActorInterface actor = model.getActor(actorName);
+			if (actor == null) {
+				actor = model.createActor(actorName);
+			}
+			newUsecase.addActor(actor, true);
+			actor.addUsecase(newUsecase);
+		}
+		
+		String dependencyText = data.get("Dependency");
+		String secondUsecaseName = "";
+		int associationType = 0;
+		if (dependencyText.startsWith("INCLUDE USE CASE")) {
+			associationType = Association.ASSOCIATION_TYPE_INCLUDE;
+			secondUsecaseName = dependencyText.substring(17);
+		} else if (dependencyText.startsWith("EXTENDED BY USE CASE")) {
+			associationType = Association.ASSOCIATION_TYPE_EXTEND;
+			secondUsecaseName = dependencyText.substring(21);
+		}
+		if (!"None".equals(secondUsecaseName) && !"".equals(secondUsecaseName)) {
+			model.createAssociation(newUsecase.getName() + "::" + secondUsecaseName,
+				newUsecase, associationType, secondUsecaseName);
+		}
+	}
+	
 	public void generate() {
 		try {
 			OutputStream png = new FileOutputStream("ucDiagram.png");
@@ -111,7 +154,7 @@ public class TestVisitor<T> extends UsecaseReaderBaseVisitor<T>
 			for(ActorInterface actor : model.getActors().values()) {
 				source += ":" + actor.getName() + ":\n";
 				for(UsecaseInterface usecase : actor.getUsecases()) {
-					source += ":" + actor.getName() + ": -- (" + usecase.getName() + ")\n";
+					source += ":" + actor.getName() + ": --> (" + usecase.getName() + ")\n";
 				};
 			};
 			
