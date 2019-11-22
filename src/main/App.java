@@ -1,5 +1,7 @@
 package main;
 
+import gui.MainWindow;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -18,10 +20,15 @@ public class App {
 	protected static TestVisitor visitor = new TestVisitor();
 	
 	public static void main(String[] args) {
-		FileChooser fileChooser = new FileChooser();
-		fileChooser.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		fileChooser.setSize(500, 300);
-		fileChooser.setVisible(true);
+		
+		MainWindow win = new MainWindow();
+		win.pack();
+	    win.setVisible(true);
+		
+//		FileChooser fileChooser = new FileChooser();
+//		fileChooser.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		fileChooser.setSize(500, 300);
+//		fileChooser.setVisible(true);
 	}
 	
 	public static void parseFromFile(String filePath) throws IOException {
