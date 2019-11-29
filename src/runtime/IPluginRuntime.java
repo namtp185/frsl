@@ -3,9 +3,9 @@ package runtime;
 import java.net.URL;
 import java.util.Map;
 
-import org.tzi.use.main.runtime.IRuntime;
-import org.tzi.use.runtime.service.IPluginService;
-import org.tzi.use.runtime.service.IPluginServiceDescriptor;
+//import org.tzi.use.main.runtime.IRuntime;
+//import org.tzi.use.runtime.service.IPluginService;
+//import org.tzi.use.runtime.service.IPluginServiceDescriptor;
 
 /**
  * This interface provides the Plugin Runtime's behaviour. It extends the common

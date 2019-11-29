@@ -1,9 +1,12 @@
 package main;
 
 import gui.MainWindow;
+import runtime.*;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
 
@@ -21,6 +24,8 @@ public class App {
 	
 	public static void main(String[] args) {
 		
+		loadPlugin();
+		
 		MainWindow win = new MainWindow();
 		win.pack();
 	    win.setVisible(true);
@@ -29,6 +34,21 @@ public class App {
 //		fileChooser.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		fileChooser.setSize(500, 300);
 //		fileChooser.setVisible(true);
+	}
+	
+	public static void loadPlugin() {
+		IRuntime pluginRuntime = null;
+		Path pluginDirURL = Paths.get("./plugins/");
+		Log.verbose("Plugin path: [" + pluginDirURL + "]");
+		try {
+			pluginRuntime = (IRuntime) MainPluginRuntime.run(pluginDirURL);
+			Log.debug("Starting plugin runtime, got class ["
+					+ pluginRuntime.getClass() + "]");
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.error("FATAL ERROR.");
+			System.exit(1);
+		}
 	}
 	
 	public static void parseFromFile(String filePath) throws IOException {
