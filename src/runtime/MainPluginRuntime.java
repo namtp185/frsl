@@ -87,7 +87,7 @@ public class MainPluginRuntime {
 //			Log.debug("ClassLoader of runtime ["
 //					+ Thread.currentThread().getContextClassLoader().toString()
 //					+ "]");
-//			cntFiles++;
+			cntFiles++;
 		}
 
 //		IPluginActionExtensionPoint actionExtensionPoint = (IPluginActionExtensionPoint) pluginRuntime

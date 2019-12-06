@@ -26,6 +26,7 @@ import javax.swing.JButton;
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -33,6 +34,8 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
+
+import main.App;
 
 
 /**
@@ -70,6 +73,8 @@ public class MainWindow extends JFrame{
 	
 //	private ResourceSet rSet;
 
+	JLabel ucDiagram = new JLabel();
+
     private JButton addToToolBar(JToolBar toolBar, AbstractAction action, String toolTip) {
         JButton tb = toolBar.add(action);
         tb.setToolTipText(toolTip);
@@ -96,10 +101,10 @@ public class MainWindow extends JFrame{
         mi.setMnemonic('O');
         
         
-        mi = menu.add(this.fActionFileOpenSnapshot);
-        mi.setAccelerator(KeyStroke
-                .getKeyStroke(KeyEvent.VK_H, Event.CTRL_MASK));
-        mi.setMnemonic('H');
+//        mi = menu.add(this.fActionFileOpenSnapshot);
+//        mi.setAccelerator(KeyStroke
+//                .getKeyStroke(KeyEvent.VK_H, Event.CTRL_MASK));
+//        mi.setMnemonic('H');
         
         // create the desktop
         fDesk = new JDesktopPane();
@@ -134,7 +139,10 @@ public class MainWindow extends JFrame{
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
         contentPane.setPreferredSize(new Dimension(800, 550));
-        contentPane.add(fToolBar, BorderLayout.NORTH);
+//        contentPane.add(fToolBar, BorderLayout.NORTH);
+        
+        contentPane.add(ucDiagram, BorderLayout.CENTER);
+        
 //        contentPane.add(fTopSplitPane, BorderLayout.CENTER);        
         setContentPane(contentPane);
 
@@ -197,12 +205,28 @@ public class MainWindow extends JFrame{
         private JFileChooser fChooser;
 
         ActionFileOpenXmi() {
-            super("Open xmi specification...");
+            super("Open usecase specification");
         }
 
         public void actionPerformed(ActionEvent e) {
-            String path;
-            // reuse chooser if possible
+        	
+        	ImageIcon image;
+        	JFileChooser c = new JFileChooser(".");
+			int rVal = c.showOpenDialog(MainWindow.this);
+			if (rVal == JFileChooser.APPROVE_OPTION) {
+				try {
+					App.parseFromFile(c.getSelectedFile().getPath());
+					
+					image = new ImageIcon("ucDiagram.png");
+			    	image.getImage().flush();
+			    	ucDiagram.setIcon(image);
+				} catch (IOException e1) {
+					e1.printStackTrace();
+				}
+			}
+			
+//            String path;
+//            // reuse chooser if possible
 //            if (fChooser == null) {
 //                path = Options.getLastDirectory();
 //                fChooser = new JFileChooser(path);
