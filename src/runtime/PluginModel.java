@@ -15,22 +15,22 @@ public class PluginModel {
 	private String pluginClass = null;
 	private String publisher = null;
 
-//	private Vector<PluginActionModel> actions = null;
+	private Vector<PluginActionModel> actions = null;
 	private Vector<PluginServiceModel> services = null;
 //	private Vector<PluginShellCmdModel> commands = null;
 
-//	/**
-//	 * Method to get the Plugin Action information
-//	 * 
-//	 * @return a Vector of Plugin Action Descriptors
-//	 */
-//	public Vector<PluginActionModel> getActions() {
-//		if (this.actions == null) {
-//			this.actions = new Vector<PluginActionModel>();
-//		}
-//		return this.actions;
-//	}
-//
+	/**
+	 * Method to get the Plugin Action information
+	 * 
+	 * @return a Vector of Plugin Action Descriptors
+	 */
+	public Vector<PluginActionModel> getActions() {
+		if (this.actions == null) {
+			this.actions = new Vector<PluginActionModel>();
+		}
+		return this.actions;
+	}
+
 //	/**
 //	 * Method to get the Plugin Shell Command information
 //	 * 

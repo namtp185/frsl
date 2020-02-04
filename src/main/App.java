@@ -24,9 +24,9 @@ public class App {
 	
 	public static void main(String[] args) {
 		
-		loadPlugin();
+		IRuntime pluginRuntime = loadPlugin();
 		
-		MainWindow win = new MainWindow();
+		MainWindow win = new MainWindow(pluginRuntime);
 		win.pack();
 	    win.setVisible(true);
 		
@@ -36,7 +36,7 @@ public class App {
 //		fileChooser.setVisible(true);
 	}
 	
-	public static void loadPlugin() {
+	public static IRuntime loadPlugin() {
 		IRuntime pluginRuntime = null;
 		Path pluginDirURL = Paths.get("./plugins/");
 		Log.verbose("Plugin path: [" + pluginDirURL + "]");
@@ -49,6 +49,7 @@ public class App {
 			Log.error("FATAL ERROR.");
 			System.exit(1);
 		}
+		return pluginRuntime;
 	}
 	
 	public static void parseFromFile(String filePath) throws IOException {

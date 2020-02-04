@@ -90,22 +90,22 @@ public class MainPluginRuntime {
 			cntFiles++;
 		}
 
-//		IPluginActionExtensionPoint actionExtensionPoint = (IPluginActionExtensionPoint) pluginRuntime
-//				.getExtensionPoint("action");
+		IPluginActionExtensionPoint actionExtensionPoint = (IPluginActionExtensionPoint) pluginRuntime
+				.getExtensionPoint("action");
 //
 //		IPluginShellExtensionPoint shellExtensionPoint = (IPluginShellExtensionPoint) pluginRuntime
 //				.getExtensionPoint("shell");
 
 //		Log.debug("Registered [" + pluginRuntime.getPlugins().size() + "] plugins");
 		
-//		for (IPluginDescriptor currentPluginDescriptor : pluginRuntime.getPlugins().values()) {
-//			Log.debug("Main: Registering services");
-//			pluginRuntime.registerServices(currentPluginDescriptor);
-//			Log.debug("Main: Registering actions");
-//			actionExtensionPoint.registerActions(currentPluginDescriptor);
+		for (IPluginDescriptor currentPluginDescriptor : pluginRuntime.getPlugins().values()) {
+			Log.debug("Main: Registering services");
+			pluginRuntime.registerServices(currentPluginDescriptor);
+			Log.debug("Main: Registering actions");
+			actionExtensionPoint.registerActions(currentPluginDescriptor);
 //			Log.debug("Main: Registering commands");
 //			shellExtensionPoint.registerCmds(currentPluginDescriptor);
-//		}
+		}
 		return pluginRuntime;
 	}
 }

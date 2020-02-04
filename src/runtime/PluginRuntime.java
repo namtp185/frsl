@@ -43,13 +43,13 @@ public class PluginRuntime implements IPluginRuntime {
 	private Map<String, IPluginServiceDescriptor> registeredServices = new HashMap<String, IPluginServiceDescriptor>();
 
 	public IExtensionPoint getExtensionPoint(String extensionPoint) {
-//		if (extensionPoint.equals("action")) {
-//			return ActionExtensionPoint.getInstance();
+		if (extensionPoint.equals("action")) {
+			return ActionExtensionPoint.getInstance();
 //		} else if (extensionPoint.equals("shell")) {
 //			return ShellExtensionPoint.getInstance();
 //		} else if (extensionPoint.equals("model")) {
 //			return MModelExtensionPoint.getInstance();
-//		} else
+		} else
 			return null;
 	}
 
@@ -73,8 +73,6 @@ public class PluginRuntime implements IPluginRuntime {
 				.get(pluginServiceClassName);
 		if (currentPluginServiceDescriptor.getPluginServiceModel()
 				.getServiceClass().equals(pluginServiceClassName)) {
-//			Log.debug("Service [" + pluginServiceClassName
-//					+ "] found and loading.");
 			return currentPluginServiceDescriptor.getServiceClass();
 		}
 		return null;
@@ -86,34 +84,17 @@ public class PluginRuntime implements IPluginRuntime {
 
 	public void registerPlugin(String pluginFilename, URL pluginURL) {
 		URL newPluginURL;
-//		Log.debug("Current plugin Information [" + pluginFilename + ","
-//				+ pluginURL + "]");
 		try {
 			newPluginURL = new URL(pluginURL + pluginFilename);
-//			Log.debug("Current pluginURL [" + newPluginURL + "]");
 			PluginRegistry pluginRegistry = PluginRegistry.getInstance();
 			IPluginDescriptor currentPluginDescriptor = pluginRegistry
 					.registerPlugin(newPluginURL);
 			if (currentPluginDescriptor == null) {
-//				Log.error("Got no Plugin Descriptor !");
 				return;
 			}
 			
-//			Log.debug("Registering plugin ["
-//					+ currentPluginDescriptor.getPluginModel().getName()
-//					+ "]");
-
 			IPluginDescriptor otherPlugin = getPlugin(currentPluginDescriptor.getPluginModel().getName());
 			if(otherPlugin != null){
-//				Log.error("Cannot load plugin "
-//						+ StringUtil.inQuotes(currentPluginDescriptor.getPluginModel().getName())
-//						+ " in file ["
-//						+ new File(currentPluginDescriptor.getPluginLocation().getPath()).getName()
-//						+ "] with version "
-//						+ StringUtil.inQuotes(currentPluginDescriptor.getPluginModel().getVersion())
-//						+ ". Another plugin with the same name and version "
-//						+ StringUtil.inQuotes(otherPlugin.getPluginModel().getVersion())
-//						+ " is already loaded.");
 				return;
 			}
 			

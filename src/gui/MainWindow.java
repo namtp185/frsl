@@ -1,6 +1,7 @@
 package gui;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Event;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
@@ -36,26 +38,12 @@ import javax.swing.JToolBar;
 import javax.swing.KeyStroke;
 
 import main.App;
+import runtime.*;
 
-
-/**
- * The main application window of InferOCL. 
- * @author duc-hanh.dang 
- */
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame{      
     
-//	private LogPanel fLogPanel;
-
     private JDesktopPane fDesk;
-    
-//    private ControlPanel fControl;    
-    
-//    private ResultPanel fResult;
-
-    private JSplitPane fLeftSplitPane;
-    
-    private JSplitPane fTopSplitPane;
     
 	private JToolBar fToolBar;
 	
@@ -68,10 +56,11 @@ public class MainWindow extends JFrame{
     private ActionFileOpenSnapshot fActionFileOpenSnapshot = new ActionFileOpenSnapshot();
     
     private ActionHelpAbout fActionHelpAbout = new ActionHelpAbout();
-
-//	private IModelToCspSolver<UMLResource> modelSolver;    
-	
-//	private ResourceSet rSet;
+    
+    private static IRuntime fPluginRuntime;
+    
+    private Map<Map<String, String>, PluginActionProxy> pluginActions = 
+    		new HashMap<Map<String, String>, PluginActionProxy>();
 
 	JLabel ucDiagram = new JLabel();
 
@@ -82,10 +71,14 @@ public class MainWindow extends JFrame{
         return tb;
     }
 	
-	public MainWindow() {
-        super("Test");        
-//        modelSolver = null;
+	public MainWindow(IRuntime pluginRuntime) {
+        super("FRSL");        
 		
+        if (pluginRuntime != null) {
+			fPluginRuntime = pluginRuntime;
+		}
+        fInstance = this;
+        
         // create the menubar
 		fMenuBar = new JMenuBar();
 		getRootPane().setJMenuBar(fMenuBar);
@@ -101,40 +94,16 @@ public class MainWindow extends JFrame{
         mi.setMnemonic('O');
         
         
-//        mi = menu.add(this.fActionFileOpenSnapshot);
-//        mi.setAccelerator(KeyStroke
-//                .getKeyStroke(KeyEvent.VK_H, Event.CTRL_MASK));
-//        mi.setMnemonic('H');
-        
         // create the desktop
         fDesk = new JDesktopPane();
         fDesk.setDesktopManager(new ViewManager());
         
-//        // create the log panel
-//        fLogPanel = new LogPanel();
-//        
-//        // create the result panel
-//        fResult = new ResultPanel();
-//        
-//        // create the browser panel
-//		fControl = new ControlPanel((ViewManager) this.fDesk.getDesktopManager());
-		
 		// create toolbar
 		fToolBar = new JToolBar();
 		addToToolBar(fToolBar, fActionFileOpenXmi,  "Open model specification");
 		addToToolBar(fToolBar, fActionFileOpenSnapshot,  "Open snapshot specification");
 		//fToolBar.addSeparator();
 
-        // put the three panels into split panes
-//        JSplitPane sp = new JSplitPane(JSplitPane.VERTICAL_SPLIT, fResult, fControl);
-//        sp.setDividerLocation(280);
-//        fLeftSplitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, sp, fDesk);
-//        fLeftSplitPane.setDividerLocation(250);
-//        fLeftSplitPane.setOneTouchExpandable(true);
-//        
-//        fTopSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, fLeftSplitPane, fLogPanel);
-//        fTopSplitPane.setDividerLocation(460);
-//        fTopSplitPane.setOneTouchExpandable(true);
         // Layout and set the content pane
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new BorderLayout());
@@ -161,31 +130,87 @@ public class MainWindow extends JFrame{
 		mi = menu.add(fActionHelpAbout);
 		mi.setMnemonic('A');
 		
-//		this.rSet = new ResourceSetImpl();
-//        rSet.getResourceFactoryRegistry().getExtensionToFactoryMap().put("uml", new UMLResourceFactoryImpl());
-//        rSet.getPackageRegistry().put(UMLPackage.eNS_URI, UMLPackage.eINSTANCE);
-//        Map uriMap = rSet.getURIConverter().getURIMap();
-//        URI uri = URI.createURI("jar:file:" + Options.homeDir + "/libs/org.eclipse.uml2.uml.resources_4.0.2.v20130114-0902.jar!/");
-//        uriMap.put(URI.createURI(UMLResource.LIBRARIES_PATHMAP), uri.appendSegment("libraries").appendSegment(""));
-//        uriMap.put(URI.createURI(UMLResource.METAMODELS_PATHMAP), uri.appendSegment("metamodels").appendSegment(""));
-//        uriMap.put(URI.createURI(UMLResource.PROFILES_PATHMAP), uri.appendSegment("profiles").appendSegment(""));
-		
+		// Plugins
+		MainWindow.instance().fToolBar.addSeparator();
+		// `Plugins' submenu
 		menu = new JMenu("Plugins");
 		menu.setMnemonic('P');
 		this.fMenuBar.add(menu);
+
+		IPluginActionExtensionPoint actionExtensionPoint = (IPluginActionExtensionPoint) fPluginRuntime
+				.getExtensionPoint("action");
+
+		this.pluginActions = actionExtensionPoint.createPluginActions(this);
+
+		Set<Map.Entry<Map<String, String>, PluginActionProxy>> pluginActionSet = this.pluginActions.entrySet();
+
+		for (Map.Entry<Map<String, String>, PluginActionProxy> currentActionMapEntry : pluginActionSet) {
+			Map<String, String> currentActionDescMap = currentActionMapEntry.getKey();
+			AbstractAction currentAction = currentActionMapEntry.getValue();
+			addToToolBar(this.fToolBar, currentAction, currentActionDescMap.get("tooltip"));
+
+			// Creating submenu and menu entries
+			if (currentActionDescMap.get("menu").toString() == null) {
+				// No submenu needed
+				Log.debug("Adding ["
+						+ currentActionDescMap.get("menuitem").toString()
+						+ "] to plugins menu");
+				menu.add(currentAction);
+			} else {
+				// Check if submenu already exists
+				Component[] menuItems = menu.getMenuComponents();
+				boolean createNewMenu = true;
+				Log
+						.debug("Menu item length was [" + menuItems.length
+								+ "]");
+				for (int iterateMenuItems = 0; iterateMenuItems < menuItems.length;) {
+					Log.debug("Menu item is of type ["
+							+ menuItems[iterateMenuItems].getClass() + "]");
+					if (menuItems[iterateMenuItems] instanceof JMenu) {
+						JMenu currentMenu = (JMenu) menuItems[iterateMenuItems];
+						Log.debug("Compairing menu ["
+								+ currentMenu.getText()
+								+ "] and ["
+								+ currentActionDescMap.get("menu")
+										.toString() + "]");
+						if (currentMenu.getText()
+								.equals(
+										currentActionDescMap.get("menu")
+												.toString())) {
+							Log.debug("Adding ["
+									+ currentActionDescMap.get("menuitem")
+											.toString() + "] to submenu ["
+									+ currentMenu.getText() + "]");
+							currentMenu.add(currentAction);
+							createNewMenu = false;
+							break;
+						}
+					}
+					iterateMenuItems++;
+				}
+				if (createNewMenu) {
+					Log.debug("Creating new Menu ["
+							+ currentActionDescMap.get("menuitem")
+									.toString() + "]");
+					JMenu pluginSubmenu = new JMenu(currentActionDescMap
+							.get("menu").toString());
+					Log.debug("Adding ["
+							+ currentActionDescMap.get("menu").toString()
+							+ "] to new submenu ["
+							+ pluginSubmenu.getText() + "]");
+					pluginSubmenu.add(currentAction);
+					menu.add(pluginSubmenu);
+				}
+			}
+		}
+		
+//		menu = new JMenu("Plugins");
+//		menu.setMnemonic('P');
+//		this.fMenuBar.add(menu);
+//		menu.add(fActionFileOpenSnapshot);
+//		menu.add(new TestAction());
     }
 
-    /**
-     * Returns the selected view of all internal views. If none is selected null
-     * is returned.
-     */
-    public View getSelectedView() {
-        if (fDesk.getSelectedFrame() != null) {
-            return ((ViewFrame) fDesk.getSelectedFrame()).getView();
-        }
-        return null;
-    }    
-       
     private void close() {
         setVisible(false);
         dispose();	
@@ -276,7 +301,18 @@ public class MainWindow extends JFrame{
 //            fLogPanel.setText("Loading the Model ... Done!");
         }
 
-    }  
+    }
+    
+    private class TestAction extends AbstractAction {
+        TestAction() {
+            super("Generate activity diagram");
+        }
+
+        public void actionPerformed(ActionEvent e) {
+        	
+        }
+    }
+    
     /**
      * Opens and compiles a snapshot specification file.
      */
@@ -284,11 +320,11 @@ public class MainWindow extends JFrame{
         private JFileChooser fChooser;
 
         ActionFileOpenSnapshot() {
-            super("Open snapshot specification...");
+            super("Generate use case diagram");
         }
 
         public void actionPerformed(ActionEvent e) {
-            String path;
+//            String path;
 //            if(modelSolver == null){
 //            	MessageBox dlg = new MessageBox(MainWindow.instance(),"Please load a model first!");
 //    			dlg.setVisible(true);
@@ -352,46 +388,6 @@ public class MainWindow extends JFrame{
         }
     }
     /**
-     * to get the csp model file 
-     * @throws ProcessingException 
-     */
-//    public File getModelCspCode() throws ProcessingException{    
-//    	String cspCodeFileExtension = modelSolver.getCspCodeGenerator().getCspCodeFileExtension();
-//        String cspCodeFileName = modelSolver.getModelFileName() + "." + cspCodeFileExtension; //$NON-NLS-1$
-//        String path = Options.resultDir + Options.FILE_SEPARATOR;
-//        File cspCodeFile = new File( path + cspCodeFileName);
-//		fControl.getEclipseSolver().setFilePath(path + modelSolver.getModelFileName());
-//        String cspCode = modelSolver.getCspCodeGenerator().getCspCode();
-//        try {
-//    	    PrintWriter out = new PrintWriter(cspCodeFile);
-//    	    out.println(cspCode);
-//    	    out.flush();
-//    	    out.close();
-//    	    return cspCodeFile;
-//        } catch (IOException e) {
-//        	throw new ProcessingException(e);
-//        }
-//    }
-    
-    /**
-     * to get list of imported ECL libs 
-     */ 
-//    public List<File> getImportLibs(){ 
-//    	File importsFolder = new File(Options.libDir);    	
-//    	File[] libs = importsFolder.listFiles(
-//    			new FilenameFilter() {
-//    				public boolean accept(File dir, String name) {    
-//    					return name.matches(".*\\.ecl$");  //$NON-NLS-1$
-//    				}
-//    			}
-//    			);
-//    	ArrayList<File> libList = new ArrayList<File>();        
-//    	for(File lib: libs){
-//    		libList.add(lib);
-//    	}    	
-//    	return libList;
-//    }        
-    /**
      * Help about.
      */
     private class ActionHelpAbout extends AbstractAction {
@@ -404,64 +400,4 @@ public class MainWindow extends JFrame{
 //            dlg.setVisible(true);
         }
     }  
-	/**
-     * initialize the modelElementsDomain attribute for modelsolver
-     */
-//	public void initializeModelElementsDomain(IModelToCspSolver<UMLResource> modelSolver) {
-//    	IModelReader<UMLResource, Package, Class, Association, Property, Operation> modelReader = (IModelReader<UMLResource, Package, Class, Association, Property, Operation>)modelSolver.getModelReader();   
-//    	List<Class> cList = (List<Class>) modelReader.getClasses();
-//    	Map<String, String> modelElementsDomain = new HashMap<String, String>();    	
-//		for (Class c : cList) {
-//    		modelElementsDomain.put(c.getPackage().getName() + "." + c.getName(), "0..10"); //$NON-NLS-1$ //$NON-NLS-2$
-//    		List<Property> atList = modelReader.getClassAttributes(c);
-//    		for (Property at : atList) 
-//    			if (at.getType() != null && "Boolean".equals(at.getType().getName())) //$NON-NLS-1$
-//    				modelElementsDomain.put(at.getClass_().getName() + "." + at.getName(), "0..1"); //$NON-NLS-1$ //$NON-NLS-2$
-//    			else if (at.getType() != null && "String".equals(at.getType().getName())){ //$NON-NLS-1$
-//    				modelElementsDomain.put(at.getClass_().getName() + "." + at.getName(), "[\"a\",\"b\",\"c\",\"d\",\"e\"]"); //$NON-NLS-1$ //$NON-NLS-2$
-//    			}
-//    			else
-//    				modelElementsDomain.put(at.getClass_().getName() + "." + at.getName(), "1..10"); //$NON-NLS-1$ //$NON-NLS-2$
-//    	}
-//    	List<String> asNames = modelReader.getAssociationsNames();
-//    	for (String asName : asNames) 
-//    		modelElementsDomain.put(asName, "0..10"); //$NON-NLS-1$
-//
-//    	modelSolver.setModelElementsDomain(modelElementsDomain);    
-//    }
-	/**
-     * get the ResultPanel
-     */
-	//public void setResult(String text, int confidence, int gainedPoint) {
-		//this.fResult.setResult(text, confidence, gainedPoint);
-		
-	//}
-	
-//	public ResultPanel getResultPanel(){
-//		return this.fResult;
-//	}
-//	
-//	public JDesktopPane getDesk() {
-//		return fDesk;
-//		
-//	}
-//	public IModelToCspSolver<UMLResource> getModelSolver() {
-//		return this.modelSolver;		
-//	}
-//	public ControlPanel getControlPanel() {		
-//        return fControl;
-//    }
-//	
-//	public LogPanel getLogPanel() {
-//        return fLogPanel;
-//    }
-	/**
-     * Shows the log panel.
-     */
-    public void showLogPanel() {
-        double loc = fTopSplitPane.getDividerLocation();
-        // if divider is at bottom move it to top so that the log is visible
-        if (loc / (fTopSplitPane.getHeight() - fTopSplitPane.getDividerSize()) > 0.95)
-            fTopSplitPane.setDividerLocation(0.75);
-    }
 }

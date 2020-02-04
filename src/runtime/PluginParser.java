@@ -115,50 +115,50 @@ public class PluginParser extends DefaultHandler implements
 
 	public void parsePluginActionAttributes(Attributes attributes) {
 
-//		PluginActionModel action = new PluginActionModel();
-//
-//		PluginModel current = this.pluginDesciptors.pop();
-//		Vector<PluginActionModel> actions = current.getActions();
-//
-//		Log.debug("PluginParser: Entering parsePluginActionAttributes.");
-//		// process attributes
-//		int len = attributes.getLength();
-//		Log
-//				.debug("PluginParser: parsePluginActionAttributes counted attributes ["
-//						+ attributes.getLength() + "]");
-//		for (int i = 0; i < len; i++) {
-//			String attrName = attributes.getQName(i);
-//			String attrValue = attributes.getValue(attrName);
-//			Log.debug("PluginParser: " + attrName + " found.");
-//			if (attrName.equals(PLUGIN_ID)) {
-//				action.setId(attrValue);
-//				Log.debug("Setting " + attrName);
-//			} else if (attrName.equals(PLUGIN_ACTION_ICON)) {
-//				action.setIcon(attrValue);
-//				Log.debug("Setting " + attrName);
-//			} else if (attrName.equals(PLUGIN_ACTION_CLASS)) {
-//				action.setActionClass(attrValue);
-//				Log.debug("Setting " + attrName);
-//			} else if (attrName.equals(PLUGIN_ACTION_LABEL)) {
-//				action.setLabel(attrValue);
-//				Log.debug("Setting " + attrName);
-//			} else if (attrName.equals(PLUGIN_ACTION_TOOLTIP)) {
-//				action.setTooltip(attrValue);
-//				Log.debug("Setting " + attrName);
-//			} else if (attrName.equals(PLUGIN_ACTION_MENU)) {
-//				action.setMenu(attrValue);
-//				Log.debug("Setting " + attrName);
-//			} else if (attrName.equals(PLUGIN_ACTION_MENU_ITEM)) {
-//				action.setMenuitem(attrValue);
-//				Log.debug("Setting " + attrName);
-//			} else if (attrName.equals(PLUGIN_ACTION_TOOLBAR_ITEM)) {
-//				action.setToolbaritem(attrValue);
-//				Log.debug("Setting " + attrName);
-//			} else
-//				internalError(PLUGIN, attrName);
-//		}
-//		actions.add(action);
-//		pluginDesciptors.push(current);
+		PluginActionModel action = new PluginActionModel();
+
+		PluginModel current = this.pluginDesciptors.pop();
+		Vector<PluginActionModel> actions = current.getActions();
+
+		Log.debug("PluginParser: Entering parsePluginActionAttributes.");
+		// process attributes
+		int len = attributes.getLength();
+		Log
+				.debug("PluginParser: parsePluginActionAttributes counted attributes ["
+						+ attributes.getLength() + "]");
+		for (int i = 0; i < len; i++) {
+			String attrName = attributes.getQName(i);
+			String attrValue = attributes.getValue(attrName);
+			Log.debug("PluginParser: " + attrName + " found.");
+			if (attrName.equals(PLUGIN_ID)) {
+				action.setId(attrValue);
+				Log.debug("Setting " + attrName);
+			} else if (attrName.equals(PLUGIN_ACTION_ICON)) {
+				action.setIcon(attrValue);
+				Log.debug("Setting " + attrName);
+			} else if (attrName.equals(PLUGIN_ACTION_CLASS)) {
+				action.setActionClass(attrValue);
+				Log.debug("Setting " + attrName);
+			} else if (attrName.equals(PLUGIN_ACTION_LABEL)) {
+				action.setLabel(attrValue);
+				Log.debug("Setting " + attrName);
+			} else if (attrName.equals(PLUGIN_ACTION_TOOLTIP)) {
+				action.setTooltip(attrValue);
+				Log.debug("Setting " + attrName);
+			} else if (attrName.equals(PLUGIN_ACTION_MENU)) {
+				action.setMenu(attrValue);
+				Log.debug("Setting " + attrName);
+			} else if (attrName.equals(PLUGIN_ACTION_MENU_ITEM)) {
+				action.setMenuitem(attrValue);
+				Log.debug("Setting " + attrName);
+			} else if (attrName.equals(PLUGIN_ACTION_TOOLBAR_ITEM)) {
+				action.setToolbaritem(attrValue);
+				Log.debug("Setting " + attrName);
+			} else
+				internalError(PLUGIN, attrName);
+		}
+		actions.add(action);
+		pluginDesciptors.push(current);
 		Log.debug("PluginParser: Leaving parsePlugin.");
 	}
 
