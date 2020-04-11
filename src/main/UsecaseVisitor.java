@@ -1,17 +1,25 @@
 package main;
+import java.io.BufferedWriter;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.tree.*;
 
 import parser.*;
 import metamodels.*;
+import net.sourceforge.plantuml.FileFormat;
+import net.sourceforge.plantuml.FileFormatOption;
 import net.sourceforge.plantuml.SourceStringReader;
 
-public class TestVisitor<T> extends UsecaseReaderBaseVisitor<T>
+public class UsecaseVisitor<T> extends UsecaseReaderBaseVisitor<T>
 {
 	FRSLModel model = new FRSLModel();
 	UsecaseInterface currentUsecase;
@@ -142,7 +150,7 @@ public class TestVisitor<T> extends UsecaseReaderBaseVisitor<T>
 		}
 	}
 	
-	public void generate() {
+	public FRSLModel generate() {
 		try {
 			OutputStream png = new FileOutputStream("ucDiagram.png");
 			String source = "@startuml\n";
@@ -171,15 +179,66 @@ public class TestVisitor<T> extends UsecaseReaderBaseVisitor<T>
 			
 			source += "@enduml\n";
 			
-			System.out.println(source);
+			// System.out.println(source);
 	
 			SourceStringReader reader = new SourceStringReader(source);
 			// Write the first image to "png"
 			String desc = reader.outputImage(png).getDescription();
+			/*
+			 * FileFormat uml = new FileOutputStream("ucDiagram.png"); FileFormatOption
+			 * fileFormatOption = new FileFormatOption(uml); String desc1 =
+			 * reader.generateDiagramDescription(fileFormatOption);
+			 */
 			// Return a null string if no generation
 		}
 		catch (Exception e) {
-			
+			e.printStackTrace();
 		}
+		
+		/* Write abstract syntax (metamodel) to concreate syntax (model) */
+		String filePath = "G:\\WORKSPACE\\thesis\\frsl\\src\\model\\concrete_syntax_model.xml";
+		BufferedWriter writer = null;
+		try {
+			writer = new BufferedWriter(new FileWriter(filePath, false));
+			StringBuffer data = new StringBuffer();
+			Map<String, ActorInterface> actors = model.getActors();
+			data.append("<model>\n");
+			if (actors != null && actors.size() > 0) {
+				for (Entry<String, ActorInterface> entry : actors.entrySet()) {
+					ActorInterface actorInterface = entry.getValue();
+					Collection<UsecaseInterface> usecase = actorInterface.getUsecases();
+					data.append("\t<actor>\n");
+					data.append("\t\t<name>" + entry.getKey() + "</name>\n");
+					for (UsecaseInterface s : usecase) {
+						data.append("\t\t<usecase>\n");
+						data.append("\t\t\t<name>" + s.getName() + "</name>\n");
+						data.append("\t\t\t<description>" + s.getDescription().getText() + "</description>\n");
+						data.append("\t\t\t<precondition>" + s.getPrecondition().getText() + "</precondition>\n");
+						data.append("\t\t</usecase>\n");
+					}
+					data.append("\t</actor>\n");
+				}
+			}
+			data.append("</model>\n");
+			/*
+			 * Map<String, AssociationInterface> associtations = model.getAssociations(); if
+			 * (associtations != null && associtations.size() > 0) { for (Entry<String,
+			 * AssociationInterface> entry : associtations.entrySet()) {
+			 * AssociationInterface associationInterface = entry.getValue();
+			 * data.append(associationInterface.getFirstEnd().getName() + " == " +
+			 * associationInterface.getSecondEnd().getName() + " == " + entry.getKey() +
+			 * "\n"); } }
+			 */
+
+			writer.write(data.toString());
+			System.out.println("DONE");
+			writer.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		/* Write abstract syntax (metamodel) to concreate syntax (model) */
+		
+		
+		return model;
 	}
 }

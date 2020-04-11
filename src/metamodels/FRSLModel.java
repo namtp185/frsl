@@ -89,5 +89,9 @@ public class FRSLModel {
 	public Map<String, AssociationInterface> getAssociations() {
 		return associations;
 	}
+	
+	public Map<String, String> getPendingAssociation() {
+		return pendingAssociations;
+	}
 
 }

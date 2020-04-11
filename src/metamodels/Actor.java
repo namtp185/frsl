@@ -13,6 +13,10 @@ public class Actor extends BasicElement implements ActorInterface {
 		usecases = new TreeMap<String, UsecaseInterface>();
 	}
 	
+	public String getNameString() {
+		return ename;
+	}
+	
 	public UsecaseInterface getUsecase(String name) {
 		return usecases.get(name);
 	}

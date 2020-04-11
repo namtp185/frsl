@@ -1,6 +1,7 @@
 package main;
 
 import gui.MainWindow;
+import metamodels.FRSLModel;
 import runtime.*;
 
 import java.io.IOException;
@@ -20,7 +21,7 @@ import parser.UsecaseReaderParser;
 
 public class App {
 
-	protected static TestVisitor visitor = new TestVisitor();
+	protected static UsecaseVisitor visitor = new UsecaseVisitor();
 	
 	public static void main(String[] args) {
 		
@@ -52,7 +53,7 @@ public class App {
 		return pluginRuntime;
 	}
 	
-	public static void parseFromFile(String filePath) throws IOException {
+	public static FRSLModel parseFromFile(String filePath) throws IOException {
 		String content = new String(Files.readAllBytes(Paths.get(filePath)));
     	
     	ANTLRInputStream inputStream = new ANTLRInputStream(content);
@@ -64,9 +65,7 @@ public class App {
         
         visitor.visit(tree);
         
-        visitor.generate();
-        
-        System.out.println("done");
+        return visitor.generate();
 		
 	}
 	

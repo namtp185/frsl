@@ -1,0 +1,48 @@
+<model>
+	<actor>
+		<name>COUNTERSTAFF</name>
+		<usecase>
+			<name>BookTable</name>
+			<description>Book table in restaurant</description>
+			<precondition>COUNTERSTAFF requires ordering function</precondition>
+		</usecase>
+		<usecase>
+			<name>SelectCategory</name>
+			<description>Select category in restaurant</description>
+			<precondition>COUNTERSTAFF select a vailable table</precondition>
+		</usecase>
+		<usecase>
+			<name>SelectItem</name>
+			<description>Select item in restaurant</description>
+			<precondition>COUNTERSTAFF select a vailable category</precondition>
+		</usecase>
+		<usecase>
+			<name>ShowOrderList</name>
+			<description>show order list</description>
+			<precondition>None</precondition>
+		</usecase>
+	</actor>
+	<actor>
+		<name>POSSYSTEM</name>
+		<usecase>
+			<name>BookTable</name>
+			<description>Book table in restaurant</description>
+			<precondition>COUNTERSTAFF requires ordering function</precondition>
+		</usecase>
+		<usecase>
+			<name>SelectCategory</name>
+			<description>Select category in restaurant</description>
+			<precondition>COUNTERSTAFF select a vailable table</precondition>
+		</usecase>
+		<usecase>
+			<name>SelectItem</name>
+			<description>Select item in restaurant</description>
+			<precondition>COUNTERSTAFF select a vailable category</precondition>
+		</usecase>
+		<usecase>
+			<name>ShowOrderList</name>
+			<description>show order list</description>
+			<precondition>None</precondition>
+		</usecase>
+	</actor>
+</model>

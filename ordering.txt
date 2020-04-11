@@ -1,0 +1,76 @@
+Use Case Name BookTable
+Brief Description Book table in restaurant
+Precondition COUNTERSTAFF requires ordering function
+Primary Actor COUNTERSTAFF
+Secondary Actors POSSYSTEM
+Generalization None
+Basic Flows
+1 COUNTERSTAFF choose table list
+2 POSSYSTEM show all tables
+3 COUNTERSTAFF select a table
+4 POSSYSTEM VALIDATES THAT if it is empty
+5 POSSYSTEM show success result notification
+Postcondition POSSYSTEM update table status
+Bounded Alternative Flows
+RFS Basic Flow 4-5
+1 COUNTERSTAFF select a not empty table
+2 POSSYSTEM show failed result notification
+3 ABORT
+Postcondition POSSYSTEM show all tables
+
+
+Use Case Name SelectCategory
+Brief Description Select category in restaurant
+Precondition COUNTERSTAFF select a vailable table
+Primary Actor COUNTERSTAFF
+Secondary Actors POSSYSTEM
+Dependency INCLUDE USE CASE BookTable
+Generalization None
+Basic Flows
+1 COUNTERSTAFF view category list
+2 POSSYSTEM show all categories
+3 COUNTERSTAFF select a category type
+4 POSSYSTEM show all categories types
+5 COUNTERSTAFF select a available category
+6 POSSYSTEM show success result notification
+Postcondition POSSYSTEM update category status
+Bounded Alternative Flows
+RFS Basic Flow 5-6
+1 COUNTERSTAFF select a not availeble category
+2 POSSYSTEM show failed result notification
+3 ABORT
+Postcondition POSSYSTEM show all categories
+
+
+Use Case Name SelectItem
+Brief Description Select item in restaurant
+Precondition COUNTERSTAFF select a vailable category
+Primary Actor COUNTERSTAFF
+Secondary Actors POSSYSTEM
+Dependency INCLUDE USE CASE SelectCategory
+Generalization None
+Basic Flows
+1 COUNTERSTAFF view item list
+2 POSSYSTEM show all items
+3 COUNTERSTAFF select a available item
+4 COUNTERSTAFF select order number
+5 POSSYSTEM show success result notification
+Postcondition POSSYSTEM order list
+Bounded Alternative Flows
+RFS Basic Flow 4-5
+1 COUNTERSTAFF cancel item
+2 POSSYSTEM show all items
+Postcondition POSSYSTEM show all items
+
+Use Case Name ShowOrderList
+Brief Description show order list
+Precondition None
+Primary Actor COUNTERSTAFF
+Secondary Actors POSSYSTEM
+Dependency EXTENDED BY USE CASE BookTable
+Dependency EXTENDED BY USE CASE SelectItem
+Generalization None
+Basic Flows
+1 COUNTERSTAFF view order list
+2 POSSYSTEM show order list
+Postcondition POSSYSTEM show order list
