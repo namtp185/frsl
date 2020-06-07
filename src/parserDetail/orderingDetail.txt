@@ -5,11 +5,6 @@ PreCondition COUNTERSTAFF requires ordering function
 PostCondition POSSYSTEM update table status
 
 
-
-
-
-
-
 Brief Description Book table in restaurant
 Precondition COUNTERSTAFF requires ordering function
 Primary Actor COUNTERSTAFF

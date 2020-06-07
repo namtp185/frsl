@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import metamodels.Actor;
+import metamodels.ActorInterface;
 import metamodels.Association;
 import metamodels.FRSLModel;
 
@@ -54,16 +55,15 @@ public class PosSystem extends JFrame {
 		setBounds(350, 180, 900, 700);
 
 		System.out.println("========== Use case map here ==========");
+		frslModel.getActors().entrySet().forEach(actor -> {
+			ActorInterface actorInterface = actor.getValue();
+			System.out.println("Actor ==> " + actorInterface.getName());
+			System.out.println("Actor association ==> " + actorInterface.getUsecase(actorInterface.getName()));
+		});
 		frslModel.getAssociations().entrySet().forEach(etr -> {
 			Association association = (Association) etr.getValue();
 			if (association != null && association.getName() != null) {
-				System.out.println(etr.getKey() + " <=====> " + association.getName());
-			}
-		});
-		System.out.println("========== Pending accosication ==========");
-		frslModel.getPendingAssociation().entrySet().forEach(etr -> {
-			if (etr.getKey() != null && etr.getValue() != null) {
-				System.out.println(etr.getKey() + " <=====> " + etr.getValue());
+				System.out.println("Associtation ==> " + association.getName());
 			}
 		});
 

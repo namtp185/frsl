@@ -196,48 +196,10 @@ public class UsecaseVisitor<T> extends UsecaseReaderBaseVisitor<T>
 		}
 		
 		/* Write abstract syntax (metamodel) to concreate syntax (model) */
-		String filePath = "G:\\WORKSPACE\\thesis\\frsl\\src\\model\\concrete_syntax_model.xml";
-		BufferedWriter writer = null;
-		try {
-			writer = new BufferedWriter(new FileWriter(filePath, false));
-			StringBuffer data = new StringBuffer();
-			Map<String, ActorInterface> actors = model.getActors();
-			data.append("<model>\n");
-			if (actors != null && actors.size() > 0) {
-				for (Entry<String, ActorInterface> entry : actors.entrySet()) {
-					ActorInterface actorInterface = entry.getValue();
-					Collection<UsecaseInterface> usecase = actorInterface.getUsecases();
-					data.append("\t<actor>\n");
-					data.append("\t\t<name>" + entry.getKey() + "</name>\n");
-					for (UsecaseInterface s : usecase) {
-						data.append("\t\t<usecase>\n");
-						data.append("\t\t\t<name>" + s.getName() + "</name>\n");
-						data.append("\t\t\t<description>" + s.getDescription().getText() + "</description>\n");
-						data.append("\t\t\t<precondition>" + s.getPrecondition().getText() + "</precondition>\n");
-						data.append("\t\t</usecase>\n");
-					}
-					data.append("\t</actor>\n");
-				}
-			}
-			data.append("</model>\n");
-			/*
-			 * Map<String, AssociationInterface> associtations = model.getAssociations(); if
-			 * (associtations != null && associtations.size() > 0) { for (Entry<String,
-			 * AssociationInterface> entry : associtations.entrySet()) {
-			 * AssociationInterface associationInterface = entry.getValue();
-			 * data.append(associationInterface.getFirstEnd().getName() + " == " +
-			 * associationInterface.getSecondEnd().getName() + " == " + entry.getKey() +
-			 * "\n"); } }
-			 */
-
-			writer.write(data.toString());
-			System.out.println("DONE");
-			writer.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		String filePath = "G:\\WORKSPACE\\thesis\\frsl\\src\\model\\FRSL.uml";
+		GenerateModel genModel = new GenerateModel(filePath, model);
+		genModel.generate();
 		/* Write abstract syntax (metamodel) to concreate syntax (model) */
-		
 		
 		return model;
 	}
