@@ -2,3 +2,4 @@ bin/
 .settings/
 output_artifacts/
 target/
+plugins/
