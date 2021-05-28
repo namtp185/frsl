@@ -1,4 +1,10 @@
-grammar FRSL;   
+grammar FRSL;
+
+@header {
+package frsl.grammar;
+}
+
+   
 metaModel  : useCaseName (NEWLINE useCaseDescription)? NEWLINE actors (NEWLINE precondition)? (NEWLINE postcondition)? (NEWLINE trigger)? (NEWLINE specialRequirement)? NEWLINE flows;
 useCaseName: 'UseCase :' use_case_name ;
 useCaseDescription: 'BriefDescription :' use_case_description ;
@@ -18,9 +24,10 @@ trigger_info : STATEMENT;
 special_requirement : STATEMENT;
 basicFlow: 'BasicFlow :' NEWLINE (basicStep|NEWLINE)+;
 alternativeFlows: 'AlternativeFlows :' NEWLINE (alternativeFlow|NEWLINE)+;
-basicStep: step ':' STATEMENT;
+basicStep: step ':' STATEMENT | condition ':' STATEMENT;
 alternativeFlow: aFlow ':' PHRASE (basicStep|NEWLINE)+;
-step: 'Step ' LETTER ;
+step: 'Step ' LETTER;
+condition: 'Condition ' LETTER;
 aFlow: 'Flow ' LETTER ;
 
 // segment

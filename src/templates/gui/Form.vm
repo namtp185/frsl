@@ -1,0 +1,174 @@
+package $clazz.packageName;
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import javax.swing.AbstractAction;
+import javax.swing.Action;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextField;
+import javax.swing.SpringLayout;
+
+import org.springframework.samples.petclinic.vet.Vet;
+
+import com.google.gson.Gson;
+
+import component.table.TableGUI;
+import form.SpringUtilities;
+import http.Service;
+import root.DemoModule;
+import root.SwingSet2;
+
+public class $clazz.className extends DemoModule {
+	
+	private static final long serialVersionUID = 1L;
+	
+	
+	/**
+	 * Component variations here
+	 */
+	public FormDemo(SwingSet2 swingset) {
+		// Set the title for this demo, and an icon used to represent this
+		// demo inside the SwingSet2 app.
+		super(swingset, "SpringLayoutDemo", "toolbar/SpringLayout.gif");
+
+		JPanel p = getDemoPanel();
+		// Create and populate the panel.d
+//		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+		
+
+        getDemoPanel().setLayout(new BorderLayout());
+        JPanel controlPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        
+        controlPanel.add(createInputDialogButton());
+
+        getDemoPanel().add(controlPanel, BorderLayout.NORTH);
+		
+		JScrollPane table = (new TableGUI()).createTable();
+		p.add(table);
+	}
+	
+	
+	/**
+	 * Entity variation here
+	 */
+	public JButton createInputDialogButton() {
+        Action a = new AbstractAction(getString("FormDemo.input_button")) {
+        	
+        	private static final long serialVersionUID = 1L;
+        	
+            public void actionPerformed(ActionEvent e) {
+            	
+            	JPanel p = new JPanel();
+        		// Create and populate the panel.
+
+            	String[] labels = { "Id: ", "First Name: ", "Last Name" };
+        		int numPairs = labels.length;
+
+        		p.setLayout(new SpringLayout());
+        		
+        		
+        		
+        		for (int i = 0; i < numPairs; i++) {
+        			JLabel l = new JLabel(labels[i], JLabel.TRAILING);
+        			p.add(l);
+        			JTextField textField = new JTextField(10);
+        			l.setLabelFor(textField);
+        			p.add(textField);
+        		}
+
+        		// Lay out the panel.
+        		SpringUtilities.makeCompactGrid(p, numPairs, 2, // rows, cols
+        				6, 6, // initX, initY
+        				6, 6); // xPad, yPad
+            	
+            	
+        		// User input
+                JOptionPane.showInputDialog(getDemoPanel(), p);
+                
+                
+                
+                List<String> fields = iterateOverJTextFields(p);
+                
+                // Create vet entity
+                if(fields.get(0).equals("")) {
+                	fields.set(0, "0");
+                }
+                Vet vet = new Vet(Integer.parseInt(fields.get(0)), fields.get(1), fields.get(2));
+                
+                // JSON.stringify
+                String jsonObject = (new Gson()).toJson(vet);
+                System.out.println(jsonObject);
+                
+                // Send request
+                
+        		String reqString = "";
+        		String APIUrl = "http://localhost:8080/vets/new";
+
+//        		String bodyJsonString = "{\"id\": 1, \"firstName\": \"abc\", \"lastName\": \"xyz\" }";
+        		String bodyJsonString = (new Gson()).toJson(vet);
+        		String response = Service.getInstance().excutePost(APIUrl, reqString, bodyJsonString);
+//        		SwingWorker<T, V>
+
+        		System.out.println(reqString);
+        		System.out.println(response);
+                
+                
+                JOptionPane.showMessageDialog(p, getString("FormDemo.create_success"));
+            }
+        };
+        return createButton(a);
+    }
+	
+    private static List<String> iterateOverJTextFields(Container container) {
+        // You have to call getComponents in order to access the
+        // container's children.
+        // Then you have to check the type of the component. 
+        // In your case you're looking for JTextField. 
+        // Then, you do what you want...
+        // Old-style
+        for (Component component : container.getComponents()) {
+            if (component instanceof JTextField) {
+                System.out.println(((JTextField) component).getText());
+            }
+        }
+
+        // New-style with Stream
+        return Stream.of(container.getComponents())
+              .filter(c -> c instanceof JTextField)
+              .map(c -> ((JTextField) c).getText())
+              .collect(Collectors.toList());
+    }
+	
+    public JButton createButton(Action a) {
+        JButton b = new JButton() {
+        	
+        	private static final long serialVersionUID = 1L;
+        	
+            public Dimension getMaximumSize() {
+                int width = Short.MAX_VALUE;
+                int height = super.getMaximumSize().height;
+                return new Dimension(width, height);
+            }
+        };
+        // setting the following client property informs the button to show
+        // the action text as it's name. The default is to not show the
+        // action text.
+        b.putClientProperty("displayActionText", Boolean.TRUE);
+        b.setAction(a);
+        // b.setAlignmentX(JButton.CENTER_ALIGNMENT);
+        return b;
+    }
+}

@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 
 import frsl.metamodel.FlowStep;
 
-public class ActorStep extends FlowStep {
+public class ActorStep extends FlowStep implements Initiator {
 
 	private String actorName;
 
@@ -20,4 +20,12 @@ public class ActorStep extends FlowStep {
 		this.actorName = actorName;
 	}
 
+	public boolean isActorStep() {
+		return true;
+	}
+	
+	public boolean isSystemStep() {
+		return false;
+	}
+	
 }

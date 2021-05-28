@@ -1,5 +1,7 @@
-// Generated from FRSL.g4 by ANTLR 4.8
+// Generated from src/frsl/grammar/FRSL.g4 by ANTLR 4.8
+
 package frsl.grammar;
+
 import org.antlr.v4.runtime.tree.ParseTreeListener;
 
 /**
@@ -227,6 +229,16 @@ public interface FRSLListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStep(FRSLParser.StepContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link FRSLParser#condition}.
+	 * @param ctx the parse tree
+	 */
+	void enterCondition(FRSLParser.ConditionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link FRSLParser#condition}.
+	 * @param ctx the parse tree
+	 */
+	void exitCondition(FRSLParser.ConditionContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link FRSLParser#aFlow}.
 	 * @param ctx the parse tree

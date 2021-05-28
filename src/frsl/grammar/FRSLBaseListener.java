@@ -1,5 +1,7 @@
-// Generated from FRSL.g4 by ANTLR 4.8
+// Generated from src/frsl/grammar/FRSL.g4 by ANTLR 4.8
+
 package frsl.grammar;
+
 
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.tree.ErrorNode;
@@ -275,6 +277,18 @@ public class FRSLBaseListener implements FRSLListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitStep(FRSLParser.StepContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterCondition(FRSLParser.ConditionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCondition(FRSLParser.ConditionContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

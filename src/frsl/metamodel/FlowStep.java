@@ -5,6 +5,7 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import frsl.metamodel.flow_step.Action;
+import frsl.metamodel.flow_step.Initiator;
 
 public class FlowStep extends USLNode {
 
@@ -21,6 +22,8 @@ public class FlowStep extends USLNode {
 	private String actionDescription;
 
 	private List<Action> actions;
+	
+	private Initiator initiator;
 
 	public String toString() {
 		return new Gson().toJson(this);
@@ -80,6 +83,18 @@ public class FlowStep extends USLNode {
 
 	public void setActionDescription(String actionDescription) {
 		this.actionDescription = actionDescription;
+	}
+	
+	public void setInitiator(Initiator initiator) {
+		this.initiator = initiator;
+	}
+	
+	public boolean isActorStep() {
+		return initiator.isActorStep();
+	}
+	
+	public boolean isSystemStep() {
+		return initiator.isSystemStep();
 	}
 
 }

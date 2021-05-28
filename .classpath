@@ -9,7 +9,7 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="lib/antlr-4.8-complete.jar"/>
 	<classpathentry kind="lib" path="lib/gson-2.2.2.jar"/>
-	<classpathentry kind="lib" path="lib/rsyntaxtextarea-3.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/rsyntaxtextarea-3.0.0.jar" sourcepath="lib/rsyntaxtextarea-3.0.0-sources.jar"/>
 	<classpathentry kind="lib" path="lib/autocomplete-3.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/plantuml.1.2020.15.jar"/>
 	<classpathentry kind="lib" path="lib/guava-29.0-jre.jar"/>
@@ -19,5 +19,70 @@
 	<classpathentry kind="lib" path="lib/stanford-postagger-full-2015-12-09/stanford-postagger-3.6.0-sources.jar"/>
 	<classpathentry kind="lib" path="lib/stanford-postagger-full-2015-12-09/stanford-postagger-3.6.0.jar"/>
 	<classpathentry kind="lib" path="lib/stanford-postagger-full-2015-12-09/stanford-postagger.jar"/>
+	<classpathentry kind="lib" path="libnew/asm-7.1.jar"/>
+	<classpathentry kind="lib" path="libnew/aspectjrt-1.9.6.jar"/>
+	<classpathentry kind="lib" path="libnew/byte-buddy-1.6.14.jar"/>
+	<classpathentry kind="lib" path="libnew/cglib-3.3.0.jar"/>
+	<classpathentry kind="lib" path="libnew/checker-qual-2.11.1.jar"/>
+	<classpathentry kind="lib" path="libnew/classmate-1.3.0.jar"/>
+	<classpathentry kind="lib" path="libnew/commons-collections-3.2.1.jar"/>
+	<classpathentry kind="lib" path="libnew/commons-dbcp-1.4.jar"/>
+	<classpathentry kind="lib" path="libnew/commons-io-2.4.jar"/>
+	<classpathentry kind="lib" path="libnew/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="libnew/commons-lang3-3.8.1.jar"/>
+	<classpathentry kind="lib" path="libnew/commons-logging-1.2.jar"/>
+	<classpathentry kind="lib" path="libnew/commons-math3-3.6.1.jar"/>
+	<classpathentry kind="lib" path="libnew/commons-pool-1.5.4.jar"/>
+	<classpathentry kind="lib" path="libnew/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="libnew/echo3-app-3.0.3.jar"/>
+	<classpathentry kind="lib" path="libnew/echo3-extras-3.0.3.jar"/>
+	<classpathentry kind="lib" path="libnew/echo3-extras-webcontainer-3.0.3.jar"/>
+	<classpathentry kind="lib" path="libnew/echo3-webcontainer-3.0.3.jar"/>
+	<classpathentry kind="lib" path="libnew/error_prone_annotations-2.3.4.jar"/>
+	<classpathentry kind="lib" path="libnew/failureaccess-1.0.1.jar"/>
+	<classpathentry kind="lib" path="libnew/filters-2.0.235.jar"/>
+	<classpathentry kind="lib" path="libnew/freemarker-2.3.28.jar"/>
+	<classpathentry kind="lib" path="libnew/guava-29.0-jre.jar"/>
+	<classpathentry kind="lib" path="libnew/hibernate-commons-annotations-5.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="libnew/hibernate-core-5.2.12.Final.jar"/>
+	<classpathentry kind="lib" path="libnew/hibernate-entitymanager-5.2.12.Final.jar"/>
+	<classpathentry kind="lib" path="libnew/hibernate-jpa-2.1-api-1.0.0.Final.jar"/>
+	<classpathentry kind="lib" path="libnew/icu4j-61.1.jar"/>
+	<classpathentry kind="lib" path="libnew/j2objc-annotations-1.3.jar"/>
+	<classpathentry kind="lib" path="libnew/jandex-2.0.3.Final.jar"/>
+	<classpathentry kind="lib" path="libnew/javapoet-1.11.1.jar"/>
+	<classpathentry kind="lib" path="libnew/javassist-3.20.0-GA.jar"/>
+	<classpathentry kind="lib" path="libnew/javax.json-1.0.4.jar"/>
+	<classpathentry kind="lib" path="libnew/javax.servlet-api-3.0.1.jar"/>
+	<classpathentry kind="lib" path="libnew/jboss-logging-3.3.0.Final.jar"/>
+	<classpathentry kind="lib" path="libnew/jboss-transaction-api_1.2_spec-1.0.1.Final.jar"/>
+	<classpathentry kind="lib" path="libnew/jfreechart-1.5.2.jar"/>
+	<classpathentry kind="lib" path="libnew/jiconfont-1.0.0.jar"/>
+	<classpathentry kind="lib" path="libnew/jiconfont-swing-1.0.1.jar"/>
+	<classpathentry kind="lib" path="libnew/jsr305-3.0.2.jar"/>
+	<classpathentry kind="lib" path="libnew/listenablefuture-9999.0-empty-to-avoid-conflict-with-guava.jar"/>
+	<classpathentry kind="lib" path="libnew/lombok-1.18.12.jar"/>
+	<classpathentry kind="lib" path="libnew/material-ui-swing-1.1.1.jar"/>
+	<classpathentry kind="lib" path="libnew/mysql-connector-java-5.1.45.jar"/>
+	<classpathentry kind="lib" path="libnew/org.abego.treelayout.core-1.0.3.jar"/>
+	<classpathentry kind="lib" path="libnew/slf4j-api-1.7.26.jar"/>
+	<classpathentry kind="lib" path="libnew/spring-aop-5.1.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libnew/spring-beans-5.1.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libnew/spring-context-5.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libnew/spring-context-support-5.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libnew/spring-core-5.1.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libnew/spring-data-commons-2.4.0.jar"/>
+	<classpathentry kind="lib" path="libnew/spring-data-jpa-2.4.0.jar"/>
+	<classpathentry kind="lib" path="libnew/spring-expression-5.1.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libnew/spring-jcl-5.1.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libnew/spring-jdbc-5.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libnew/spring-orm-5.0.2.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libnew/spring-tx-5.3.0.jar"/>
+	<classpathentry kind="lib" path="libnew/spring-web-5.1.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libnew/spring-webmvc-5.1.5.RELEASE.jar"/>
+	<classpathentry kind="lib" path="libnew/ST4-4.1.jar"/>
+	<classpathentry kind="lib" path="libnew/swing-worker-1.1.jar"/>
+	<classpathentry kind="lib" path="libnew/swingx-1.6.1.jar"/>
+	<classpathentry kind="lib" path="libnew/velocity-1.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

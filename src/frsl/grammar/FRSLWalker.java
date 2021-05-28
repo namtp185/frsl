@@ -9,9 +9,11 @@ import java.util.regex.Pattern;
 
 import frsl.metamodel.AlternateFlowEdge;
 import frsl.metamodel.BasicFlowEdge;
+import frsl.metamodel.ConditionStep;
 import frsl.metamodel.DescriptionInfo;
 import frsl.metamodel.FlowEdge;
 import frsl.metamodel.FlowStep;
+import frsl.metamodel.SequenceStep;
 import frsl.metamodel.USLNode;
 import frsl.metamodel.UseCase;
 import frsl.metamodel.Variable;
@@ -35,6 +37,7 @@ public class FRSLWalker extends FRSLBaseListener {
 	private boolean isHasInitalNode = false;
 	private boolean isHasFinalNode = false;
 	private FinalNode finalNode;
+	private String lastStepName;
 
 	private Set<String> flows = new HashSet<String>();
 
@@ -94,26 +97,58 @@ public class FRSLWalker extends FRSLBaseListener {
 		flows.add(currentFlowName);
 	}
 
+	public void enterCondition(FRSLParser.ConditionContext ctx) {
+
+	}
+
 	public void enterBasicStep(FRSLParser.BasicStepContext ctx) {
-		FlowStep flowStep = new FlowStep();
+		FlowStep flowStep;
+
+		flowStep = new SequenceStep();
+		
+		
+		if (ctx.condition() != null)
+			flowStep = new ConditionStep();
+		// if(ctx.step() != null)
+
 		flowStep.setType(currentFlowName);
-		flowStep.setName(ctx.step().LETTER().getText().trim().toLowerCase());
+
+		String flowStepName = ctx.condition() != null ? ctx.condition().LETTER().getText()
+				: ctx.step().LETTER().getText();
+		flowStep.setName(flowStepName.trim().toLowerCase());
 		flowStep.setDescription(ctx.STATEMENT().getText().trim());
 
 		flowStep.setActionDescription(flowStep.getDescription().substring(0, flowStep.getDescription().indexOf(".")));
 		flowStep.setValid(true);
 		if (currentFlowName.equalsIgnoreCase("Basic Flow")) {
+			int lastStepIndex = lastStepName != null ? Integer.parseInt(lastStepName) : 0;
+			int currentStepIndex = Integer.parseInt(flowStep.getName());
+			if(currentStepIndex > lastStepIndex) {
+				lastStepName = flowStep.getName();
+			}
+				
 			flowStep.setId("Step_" + flowStep.getName());
 		} else {
 			flowStep.setId("Step_" + flowStep.getType().replace(" ", "") + flowStep.getName());
+			String fullName = flowStep.getType().replace(" ", "") + flowStep.getName();
+			flowStep.setName(fullName);
 		}
+		
+		if(ctx.condition() != null) {
+			flowStep.setName("c" + flowStep.getName());
+		}
+		
 		metaModel.getUslNodes().add(flowStep);
+		metaModel.track(flowStep);
 	}
 
 	public void exitMetaModel(FRSLParser.MetaModelContext ctx) {
 		// Extracted some basic information from text (write concreteSyntax) and push to
 		// metalmodel (of abtractSystax).
 		// Now, we are extracting more information,and push to metalmodel .
+		
+		// set laststep
+		metaModel.setLastStepName(lastStepName);
 
 		// First, check type of flow step
 		for (int i = 0; i < metaModel.getUslNodes().size(); i++) {
@@ -124,13 +159,15 @@ public class FRSLWalker extends FRSLBaseListener {
 			int type = FlowStepTypeChecker.checkFlowStepType(fs, metaModel);
 			// if SystemStep
 			if (type == 0) {
-				metaModel.getUslNodes().set(i, CloneFactory.fromFlowStep(SystemStep.class, fs));
+				fs.setInitiator(new SystemStep());
+				metaModel.getUslNodes().set(i, fs);
 			}
 			// if ActorStep
 			if (type == 1) {
-				ActorStep as = (ActorStep) CloneFactory.fromFlowStep(ActorStep.class, fs);
-				as.setActorName(MetamodelUtil.findActorNameInSentence(as.getDescription().toLowerCase(), metaModel));
-				metaModel.getUslNodes().set(i, as);
+				ActorStep as = new ActorStep();
+				as.setActorName(MetamodelUtil.findActorNameInSentence(fs.getDescription().toLowerCase(), metaModel));
+				fs.setInitiator(as);
+				metaModel.getUslNodes().set(i, fs);
 			}
 			if (type == -1) {
 				fs.setValid(false);
@@ -138,6 +175,7 @@ public class FRSLWalker extends FRSLBaseListener {
 			}
 		}
 
+		/*
 		// create FlowEdeg;
 		List<USLNode> uslNodes = metaModel.getUslNodes();
 		USLNode preNode = null;
@@ -354,7 +392,7 @@ public class FRSLWalker extends FRSLBaseListener {
 			}
 			joinNode.setId(id);
 		}
-		System.out.println(metaModel);
+		*/
 	};
 
 	private static boolean isExistOnListFlowsOfEachJoinNode(List<List<FlowEdge>> listFlowsOfEachJoinNode,
