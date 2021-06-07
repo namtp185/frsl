@@ -1,105 +1,39 @@
 package frsl.metamodel;
 
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
-import com.google.gson.Gson;
+import frsl.grammar.HasDescriptionInfo;
 
-public class UseCase {
+public interface UseCase extends HasDescriptionInfo {
 
-	DescriptionInfo descriptionInfo;
+	String toString();
 
-	List<Variable> variables;
+	List<Variable> getVariables();
 
-	List<FlowEdge> flowEdges;
+	void setVariables(List<Variable> variables);
 
-	List<USLNode> uslNodes;
-	
-	private String lastStepName;
-	
-	TreeMap<String, FlowStep> tracker = new TreeMap<>();
-	TreeMap<Integer, String> indexTracker = new TreeMap<>();
-	TreeMap<String, Integer> intIndexTracker = new TreeMap<>();
-	
+	List<FlowEdge> getFlowEdges();
 
-	public String toString() {
-		return new Gson().toJson(this);
-	}
+	void setFlowEdges(List<FlowEdge> flowEdges);
 
-	public DescriptionInfo getDescriptionInfo() {
-		return descriptionInfo;
-	}
+	List<USLNode> getUslNodes();
 
-	public void setDescriptionInfo(DescriptionInfo descriptionInfo) {
-		this.descriptionInfo = descriptionInfo;
-	}
+	void setUslNodes(List<USLNode> uslNodes);
 
-	public List<Variable> getVariables() {
-		return variables;
-	}
+	void track(FlowStep step);
 
-	public void setVariables(List<Variable> variables) {
-		this.variables = variables;
-	}
+	NavigableStep getFlowStep(String stepName);
 
-	public List<FlowEdge> getFlowEdges() {
-		return flowEdges;
-	}
+	NavigableStep getFlowStep(Integer index);
 
-	public void setFlowEdges(List<FlowEdge> flowEdges) {
-		this.flowEdges = flowEdges;
-	}
+	Integer getFlowStepIntIndex(String stepName);
 
-	public List<USLNode> getUslNodes() {
-		return uslNodes;
-	}
+	String getFlowStepStringIndex(Integer index);
 
-	public void setUslNodes(List<USLNode> uslNodes) {
-		this.uslNodes = uslNodes;
-	}
-	
-	public void track(FlowStep step) {
-		String fullName = step.getName();
-//		if(step.getType() != "") {
-//			fullName = step.getType().replace(" ", "") + step.getName();
-//		} 
-		this.tracker.put(fullName, step);
-		this.indexTracker.put(uslNodes.size() - 1, fullName);
-		this.intIndexTracker.put(fullName, uslNodes.size() - 1);
-	}
-	
-	public FlowStep getFlowStep(String stepName) {
-		return this.tracker.get(stepName);
-	}
-	
-	public FlowStep getFlowStep(Integer index) {
-		return this.tracker.get(indexTracker.get(index));
-	}
-	
-	public Integer getFlowStepIntIndex(String stepName) {
-		return this.intIndexTracker.get(stepName);
-	}
-	
-	public String getFlowStepStringIndex(Integer index) {
-		return this.indexTracker.get(index);
-	}
-	
-	public String getLastStepName() {
-		return this.lastStepName;
-	}
-	
-	public void setLastStepName(String lastStepName) {
-		this.lastStepName = lastStepName;
-	}
-	
-	public String getReferenceAlternateStep(String basicStepName) {
-		for(String stepName : this.tracker.keySet()) {
-			if(stepName.contains(basicStepName) && !stepName.equals(basicStepName)) {
-				return stepName;
-			}
-		}
-		return null;
-	}
+	String getLastStepName();
+
+	void setLastStepName(String lastStepName);
+
+	String getReferenceAlternateStep(String basicStepName);
 
 }

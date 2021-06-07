@@ -1,10 +1,11 @@
 package frsl.util;
 
-import frsl.metamodel.FlowStep;
+import frsl.grammar.HasDescriptionInfo;
+import frsl.metamodel.NavigableStep;
 import frsl.metamodel.UseCase;
 
 public class FlowStepTypeChecker {
-	public static int checkFlowStepType(FlowStep fs, UseCase metaModel) {
+	public static int checkFlowStepType(NavigableStep fs, HasDescriptionInfo metaModel) {
 		String content = fs.getDescription().toLowerCase();
 		int pOfSystemKeyword = content.indexOf("system");
 		int pOfActorName = -1;

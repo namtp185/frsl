@@ -4,35 +4,26 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
-import frsl.metamodel.AlternateFlowEdge;
-import frsl.metamodel.BasicFlowEdge;
 import frsl.metamodel.ConditionStep;
 import frsl.metamodel.DescriptionInfo;
 import frsl.metamodel.FlowEdge;
 import frsl.metamodel.FlowStep;
+import frsl.metamodel.UseCase;
 import frsl.metamodel.SequenceStep;
 import frsl.metamodel.USLNode;
-import frsl.metamodel.UseCase;
+import frsl.metamodel.DefaultUseCase;
 import frsl.metamodel.Variable;
-import frsl.metamodel.control_node.DecisionNode;
 import frsl.metamodel.control_node.FinalNode;
-import frsl.metamodel.control_node.ForkNode;
-import frsl.metamodel.control_node.InitialNode;
-import frsl.metamodel.control_node.JoinNode;
 import frsl.metamodel.flow_step.ActorStep;
-import frsl.metamodel.flow_step.Contraint;
 import frsl.metamodel.flow_step.SystemStep;
-import frsl.util.CloneFactory;
 import frsl.util.FlowStepTypeChecker;
 import frsl.util.MetamodelUtil;
-import frsl.util.SentenceTypeChecker;
 
 public class FRSLWalker extends FRSLBaseListener {
 
 	private UseCase metaModel;
+	private UseCase improvedMetaModel;
 
 	private boolean isHasInitalNode = false;
 	private boolean isHasFinalNode = false;
@@ -40,6 +31,8 @@ public class FRSLWalker extends FRSLBaseListener {
 	private String lastStepName;
 
 	private Set<String> flows = new HashSet<String>();
+	
+	private static final String BASIC_FLOW = "Basic Flow";
 
 	private String currentFlowName;
 
@@ -48,7 +41,7 @@ public class FRSLWalker extends FRSLBaseListener {
 	}
 
 	public void enterMetaModel(FRSLParser.MetaModelContext ctx) {
-		metaModel = new UseCase();
+		metaModel = new DefaultUseCase();
 		metaModel.setDescriptionInfo(new DescriptionInfo());
 		metaModel.setVariables(new ArrayList<Variable>());
 		metaModel.setFlowEdges(new ArrayList<FlowEdge>());
@@ -88,7 +81,7 @@ public class FRSLWalker extends FRSLBaseListener {
 	}
 
 	public void enterBasicFlow(FRSLParser.BasicFlowContext ctx) {
-		currentFlowName = "Basic Flow";
+		currentFlowName = BASIC_FLOW;
 		flows.add(currentFlowName);
 	}
 

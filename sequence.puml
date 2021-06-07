@@ -1,2 +1,31 @@
 @startuml
+start
+:The Librarian selects the Lend_Book function.;
+:The system shows the lend_book window, gets the current date and assigns it to the book_loan date.;
+if (request searched book) then(false)
+:;
+else (true)
+:The Librarian selects the search function.;
+endif
+repeat
+:The Librarian enters a book copy id.;
+:The system checks the book copy id.;
+backward :The system shows an error message. Then going to step 3.;
+repeat while (The book copy id is invalid) is (true) not (false)
+repeat
+:The Librarian enters a borrower id.;
+:The system validates the borrower id.;
+backward :The system shows an error message. Then going to step 5.;
+repeat while (The Borrower id is invalid) is (true) not (false)
+:The Librarian clicks the save_book_loan button.;
+:The system validates the conditions to lend_book.;
+if (lending conditions are in valid) then(false)
+:;
+else (true)
+:The system shows an error message.;
+endif
+:The system saves the book loan record. Then executing step 10 and step 11 concurrently.;
+:The system shows a complete message.;
+:The system prints the borrowing bill.;
+end
 @enduml

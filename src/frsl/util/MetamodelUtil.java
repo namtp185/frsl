@@ -3,10 +3,12 @@ package frsl.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import frsl.grammar.HasDescriptionInfo;
 import frsl.metamodel.FlowEdge;
 import frsl.metamodel.FlowStep;
-import frsl.metamodel.USLNode;
+import frsl.metamodel.NavigableStep;
 import frsl.metamodel.UseCase;
+import frsl.metamodel.USLNode;
 import frsl.metamodel.control_node.ForkNode;
 import frsl.metamodel.flow_step.ActorStep;
 import frsl.metamodel.flow_step.SystemStep;
@@ -53,7 +55,7 @@ public class MetamodelUtil {
 		return null;
 	}
 
-	public static String findActorNameInSentence(String sentence, UseCase metaModel) {
+	public static String findActorNameInSentence(String sentence, HasDescriptionInfo metaModel) {
 		String actorName = null;
 		for (String aName : metaModel.getDescriptionInfo().getActors()) {
 			if (sentence.contains(aName.toLowerCase())) {
@@ -64,7 +66,7 @@ public class MetamodelUtil {
 		return actorName;
 	}
 
-	public static FlowStep findFlowStep(String stepname, UseCase metaModel) {
+	public static NavigableStep findFlowStep(String stepname, UseCase metaModel) {
 		if (stepname == null)
 			return null;
 
@@ -95,7 +97,7 @@ public class MetamodelUtil {
 		return null;
 	}
 
-	public static String findStepName(FlowStep fs, UseCase metaModel) {
+	public static String findStepName(NavigableStep fs, UseCase metaModel) {
 		String sentence = fs.getDescription().toLowerCase();
 		String stepName = isContainStepName(sentence, metaModel);
 		if (stepName != null) {
@@ -104,7 +106,7 @@ public class MetamodelUtil {
 		return stepName;
 	}
 
-	public static List<String> findListStepName(FlowStep fs, UseCase metaModel) {
+	public static List<String> findListStepName(NavigableStep fs, UseCase metaModel) {
 		List<String> rs = new ArrayList<String>();
 		String sentence = fs.getDescription().toLowerCase();
 		String stepName = isContainStepName(sentence, metaModel);

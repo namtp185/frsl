@@ -30,6 +30,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import frsl.grammar.GrammarUtil;
 import frsl.metamodel.UseCase;
+import frsl.metamodel.UseCaseV2;
 import frsl.runtime.Log;
 import frsl.runtime.PluginActionProxy;
 import frsl.runtime.RuntimeUtil;
@@ -64,7 +65,7 @@ public class MainWindow extends JFrame {
 
 	private ActionCompile actionCompile = new ActionCompile();
 
-	private UseCase metaModel;
+	private UseCaseV2 metaModel;
 
 	private static IRuntime pluginRuntime;
 
@@ -223,7 +224,7 @@ public class MainWindow extends JFrame {
 	}
 
 	// setter getter
-	public UseCase getMetaModel() {
+	public UseCaseV2 getMetaModel() {
 		return metaModel;
 	}
 

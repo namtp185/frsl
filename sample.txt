@@ -8,16 +8,12 @@ SpecialRequirement : There is no special requirement.
 BasicFlow :
 Step 1: The Librarian selects the Lend_Book function.
 Step 2: The system shows the lend_book window, gets the current date and assigns it to the book_loan date.
-Condition 1: need to search book.
 Step 3: The Librarian enters a book copy id.
-Step 4: The system checks the book copy id. If book copy id is valid then it goes to step 5 else it goes to step 5a1.
-Condition 2: book copy is valid.
+Step 4: The system checks the book copy id.
 Step 5: The Librarian enters a borrower id.
-Step 6: The system validates the borrower id. If borrower id is invalid then goes to step 7a1.
-Condition 3: borrower id is valid.
+Step 6: The system validates the borrower id.
 Step 7: The Librarian clicks the save_book_loan button.
-Condition 4: conditions are valid.
-Step 8: The system validates the conditions to lend_book. If conditions are invalid then the system goes to step 8a1.
+Step 8: The system validates the conditions to lend_book.
 Step 9: The system saves the book loan record. Then executing step 10 and step 11 concurrently.
 Step 10: The system shows a complete message.
 Step 11: The system prints the borrowing bill.
@@ -26,7 +22,7 @@ Flow 5a: The book copy id is invalid
 Step 1: The system shows an error message. Then going to step 3.
 Flow 7a: The Borrower id is invalid
 Step 1: The system shows an error message. Then going to step 5.
-Flow 8a: The lending condition is invalid
+Flow 8a: lending conditions are in valid
 Step 1: The system shows an error message.
 Flow 3a: request searched book
 Step 1: The Librarian selects the search function.
